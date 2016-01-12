@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Mon 11 Jan 2016 11:30:35 PM CST
+* Last Modified : Tue 12 Jan 2016 10:41:23 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -16,6 +16,7 @@ C LANGUAGE       ()''()-.
   /___\ /___\      '-'._----'
 _._._._._._._._._._._._._._._._._._._._._.*/
 
+#include <stdio.h>
 #include <stdlib.h>
 
 int i=0;
@@ -29,9 +30,9 @@ typedef struct
 
 void agregarPersona(Persona *p, int a) //para agregar personas al arreglo
 {
-  (p+a)->nombreP = malloc(sizeof(char)*10);
+  (p+a)->nombre = malloc(sizeof(char)*10);
   printf("Dame el nombre: ");
-  scanf("%s",(p+a)->nombreP);
+  scanf("%s",(p+a)->nombre);
 
   (p+a)->apellido = malloc(sizeof(char)*10);
   printf("Dame el apellido: ");
@@ -51,8 +52,8 @@ void limpiar(Persona*p, int c) //para no tener memory leaks
   for (aux = p; aux < final; ++aux) //vamos limpiando uno por uno los arreglos
   {
     i++;
-    free(aux->nombreP);
-    aux->nombreP=NULL;
+    free(aux->nombre);
+    aux->nombre=NULL;
     free(aux->apellido);
     aux->apellido=NULL;
   }
@@ -67,6 +68,8 @@ int main()
   Persona *p;
   int tamP = 0;//tamaño del arreglo dinámico
 
+  /*Aquí debería haber un menu*/
+
   //sección del arreglo dinámico
   p = (Persona*)malloc(1*sizeof(Persona));
   p = (Persona*)realloc(p, (tamP+1) * sizeof(Persona));
@@ -74,13 +77,31 @@ int main()
   agregarPersona(p, tamP);
   tamP++;
   
-  /*sección de promedio de edad, entre edades y el más viejo
-   
-   */
+  /*sección de promedio de edad, entre edades y el más viejo */
+  //promedio de edad
+  int promedio;
+  
+  for(i = 0; i < tamP; ++i)
+    promedio = (p+i)->edad;
 
-  /*sección de imprimir
+  promedio = promedio/tamP;
+  printf("El promedio de edad es %s", promedio);
 
-  */
+  //entre edades
+  
+
+  //el más viejo
+  Persona *res;
+  
+  for (i = 0; i < tamP; ++i)
+  {
+    if(i+1 != tamP && (p+i)->edad < (p+i+1)->edad)
+      res = p;
+  }
+  printf("La persona mas vieja es %s %s %d", res->nombre, res->apellido, res->edad);
+  free(res);
+  
+  /*sección de imprimir*/
 
   limpiar(p,tamP);//no memory leaks
   return 0;
