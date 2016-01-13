@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Tue 12 Jan 2016 11:23:02 PM CST
+* Last Modified : Tue 12 Jan 2016 11:24:44 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -50,10 +50,10 @@ void agregarPersona(Persona *p, int a) //para agregar personas al arreglo
 void limpiar(Persona*p, int c) //para no tener memory leaks
 {
   Persona *aux;
-  Persona *final=p+c;
+  Persona *final= p+c;
   i=0;
 
-  for (aux = p; aux < final; ++aux) //vamos limpiando uno por uno el arreglos
+  for (aux = p; aux < final; ++aux) //vamos limpiando uno por uno el arreglo
   {
     i++;
     free(aux->nombre);
