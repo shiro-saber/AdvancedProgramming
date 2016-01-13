@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Tue 12 Jan 2016 09:17:08 PM CST
+* Last Modified : Tue 12 Jan 2016 09:51:33 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -42,6 +42,8 @@ void agregarPersona(Persona *p, int a) //para agregar personas al arreglo
 
   printf("Dame la edad: \n");
   scanf("%d",&(p+a)->edad);
+
+  printf("%s %s %d agregado correctamente\n", (p+a)->nombre, (p+a)->apellido, (p+a)->edad);
 }
 
 
@@ -84,21 +86,19 @@ int main()
       p = (Persona*)realloc(p, (tamP+1) * sizeof(Persona));
       agregarPersona(p, tamP);
       tamP++;
-      printf("%s %s %d agregado correctamente\n", p->nombre, p->apellido, p->edad);
     }
 
     /*sección de promedio de edad, entre edades y el más viejo */
     else if(sharmutta == 2)
     {
       //promedio de edad
-      int promedio;
+      float promedio;
 
       for(i = 0; i < tamP; ++i)
         //printf("%s %s %d leido correctamente\n", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
         promedio += (p+i)->edad;
 
-      promedio = promedio/i;
-      printf("El promedio de edad es %d\n", promedio);
+      printf("El promedio de edad es %.1f\n", (promedio/i));
     }
     else if(sharmutta == 3)
     {
@@ -111,7 +111,7 @@ int main()
 
       for (i = 0; i < tamP; ++i)
       {
-        if(i+1 != tamP && (p+i)->edad < (p+i+1)->edad && tamP != 1)
+        if(i+1 != tamP+1 && (p+i)->edad < (p+i+1)->edad && tamP != 0)
           res = (p+i);
       }
       printf("La persona mas vieja es %s %s %d\n", res->nombre, res->apellido, res->edad);
