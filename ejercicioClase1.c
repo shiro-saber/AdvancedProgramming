@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Tue 12 Jan 2016 09:51:33 PM CST
+* Last Modified : Tue 12 Jan 2016 11:21:18 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -18,8 +18,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define kuz 5
 
 int i=0;
 
@@ -76,9 +74,9 @@ int main()
   //sección del arreglo dinámico
   p = (Persona*)malloc(1*sizeof(Persona));
 
-  while(sharmutta != 5)
+  while(sharmutta != 7)
   {
-    printf("Menu\n   1. Agregar Persona\n   2. Promedio\n   3. Entre edades\n   4. El mas viejo\n   5. Salir\n");
+    printf("Menu\n   1. Agregar Persona\n   2. Promedio\n   3. Entre edades\n   4. El mas viejo\n   5. EL mas joven\n   6. Listar\n   7. Salir\n");
     scanf("%d", &sharmutta);
     
     if(sharmutta == 1)
@@ -103,6 +101,18 @@ int main()
     else if(sharmutta == 3)
     {
       //entre edades
+      int edad, edad2;
+      printf("Entre el primer numero del rango\n");
+      scanf("%d", &edad);
+      printf("Entre el segundo numero del rango (debe ser mayor al anterior)\n");
+      scanf("%d", &edad2);
+
+      for(i = 0; i < tamP; ++i)
+      {
+        if((p+i)->edad < edad2 && (p+i)->edad > edad)
+          printf("%s %s %d", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
+      }
+    
     }
     else if(sharmutta == 4)
     {
@@ -113,11 +123,32 @@ int main()
       {
         if(i+1 != tamP+1 && (p+i)->edad < (p+i+1)->edad && tamP != 0)
           res = (p+i);
+        else
+          res = p;
       }
       printf("La persona mas vieja es %s %s %d\n", res->nombre, res->apellido, res->edad);
-      free(res);
     }
     else if(sharmutta == 5)
+    {
+      //el más joven
+      Persona *res;
+
+      for (i = 0; i < tamP; ++i)
+      {
+        if(i+1 != tamP+1 && (p+i)->edad > (p+i+1)->edad && tamP != 0)
+          res = (p+i);
+        else
+          res = p;
+      }
+      printf("La persona mas joven es %s %s %d\n", res->nombre, res->apellido, res->edad);
+    }
+    else if(sharmutta == 6)
+    {
+      printf("Las personas guardadas son:\n");
+      for(i = 0; i < tamP; ++i)
+        printf("%s %s %d\n", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
+    }
+    else if(sharmutta == 7)
     {
       printf("BYE!\n");
     }
