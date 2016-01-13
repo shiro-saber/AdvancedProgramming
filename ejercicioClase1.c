@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Tue 12 Jan 2016 08:51:09 PM CST
+* Last Modified : Tue 12 Jan 2016 09:17:08 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -51,7 +51,7 @@ void limpiar(Persona*p, int c) //para no tener memory leaks
   Persona *final=p+c;
   i=0;
 
-  for (aux = p; aux < final; ++aux) //vamos limpiando uno por uno los arreglos
+  for (aux = p; aux < final; ++aux) //vamos limpiando uno por uno el arreglos
   {
     i++;
     free(aux->nombre);
@@ -94,11 +94,11 @@ int main()
       int promedio;
 
       for(i = 0; i < tamP; ++i)
+        //printf("%s %s %d leido correctamente\n", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
         promedio += (p+i)->edad;
 
-      promedio = promedio/tamP;
-      printf("El promedio de edad es %s\n", promedio);
-    
+      promedio = promedio/i;
+      printf("El promedio de edad es %d\n", promedio);
     }
     else if(sharmutta == 3)
     {
@@ -112,7 +112,7 @@ int main()
       for (i = 0; i < tamP; ++i)
       {
         if(i+1 != tamP && (p+i)->edad < (p+i+1)->edad && tamP != 1)
-          res = p;
+          res = (p+i);
       }
       printf("La persona mas vieja es %s %s %d\n", res->nombre, res->apellido, res->edad);
       free(res);
