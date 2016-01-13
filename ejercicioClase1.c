@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Tue 12 Jan 2016 11:21:18 PM CST
+* Last Modified : Tue 12 Jan 2016 11:23:02 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -18,6 +18,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include <stdio.h>
 #include <stdlib.h>
+
+/*uso de malloc y realloc para arreglos dinámicos en C*/
 
 int i=0;
 
