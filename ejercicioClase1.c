@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 11-01-2016
-* Last Modified : Tue 12 Jan 2016 11:24:44 PM CST
+* Last Modified : Tue 12 Jan 2016 11:34:39 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -88,7 +88,7 @@ int main()
       tamP++;
     }
 
-    /*sección de promedio de edad, entre edades y el más viejo */
+    /*sección de promedio de edad, entre edades, el más joven y el más viejo */
     else if(sharmutta == 2)
     {
       //promedio de edad
@@ -111,8 +111,8 @@ int main()
 
       for(i = 0; i < tamP; ++i)
       {
-        if((p+i)->edad < edad2 && (p+i)->edad > edad)
-          printf("%s %s %d", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
+        if((p+i)->edad <= edad2 && (p+i)->edad >= edad)
+          printf("%s %s %d\n", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
       }
     
     }
@@ -146,7 +146,7 @@ int main()
     }
     else if(sharmutta == 6)
     {
-      printf("Las personas guardadas son:\n");
+      printf("Las %d personas guardadas son:\n", tamP);
       for(i = 0; i < tamP; ++i)
         printf("%s %s %d\n", (p+i)->nombre, (p+i)->apellido, (p+i)->edad);
     }
