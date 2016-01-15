@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : ejercicioClase2.c
 * Creation Date : 14-01-2016
-* Last Modified : Thu 14 Jan 2016 11:23:11 AM CST
+* Last Modified : Thu 14 Jan 2016 11:26:49 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -28,11 +28,9 @@ long int longitud(char *palabra)
   return (p - palabra - 1);
 }
 
-void volteamela(char* palabra)
+void volteamela(char* palabra, long int lon)
 {
   char *p, *sharmutta, modishness;
-  long int lon;
-  lon = longitud(palabra);
   p = palabra;
   sharmutta = p + (lon - 1);
   
@@ -59,10 +57,9 @@ int main()
      
   printf("Entre una palabra: ");
   scanf("%\n[^\n]", palabra);
-  //fgets(palabra, sizeof palabra, stdin);
-  //std::getline(std::cin, palabra);
 
-  volteamela(palabra);
+  long int muerde = longitud(palabra);
+  volteamela(palabra, muerde);
   printf("Cadena invertida = %s \n", palabra);
 
   free (palabra);
