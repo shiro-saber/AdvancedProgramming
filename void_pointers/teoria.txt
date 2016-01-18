@@ -1,0 +1,9 @@
+------------------------------Void Pointers------------------------------
+
+- Sirve para guardar datos de una función en un arreglo.
+- Pueden ser dinámicos, caso contrario al switch case
+- se definen como typedef int(* opciones_t)(int, int) donde * indica que es un apuntador y opciones_t es el tipo de dato
+- Tambien se puede definir con malloc... 
+  opciones_t *menu = (opciones_t*)malloc(N_opciones * sizeof(opciones_t))
+- Para generalizar el código en C
+
