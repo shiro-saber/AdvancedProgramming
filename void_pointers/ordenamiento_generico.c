@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : ordenamiento_generico.c
 * Creation Date : 18-01-2016
-* Last Modified : Mon 18 Jan 2016 08:36:35 PM CST
+* Last Modified : Tue 19 Jan 2016 11:46:22 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -143,10 +143,10 @@ void selection(void *dato, size_t cont, size_t size, ordenamiento o, criterio c)
     minimo = aux;
     for(j = aux + size; j < last; j+=size)
     {
-      if ((*o)(minimo, j))
+      if ((o)(minimo, j))
         minimo = j;
     }
-    (*c)(minimo, aux);
+    (c)(minimo, aux);
   }
 }
 
@@ -168,7 +168,7 @@ int main()
   
   printf("\n");
 
-  selection(datos, N, sizeof(*datos), &int_asc, &ordenamela_int);
+  selection(datos, N, sizeof(*datos), int_asc, ordenamela_int);
   free(datos);
   
   /*prueba floats*/
