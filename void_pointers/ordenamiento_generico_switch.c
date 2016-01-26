@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
-* File Name : ordenamiento_generico.c
-* Creation Date : 18-01-2016
-* Last Modified : Thu 21 Jan 2016 11:00:03 AM CST
+* File Name : ordenamiento_generico_switch.c
+* Creation Date : 21-01-2016
+* Last Modified : Thu 21 Jan 2016 03:29:05 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -21,7 +21,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <time.h>
 #define N 20
 
-/*Hacer un programa que ordeneme ints, floats, chars, con bubble,  selection e insertion, con void pointers... */
+/*Hacer un programa que ordeneme ints, floats, con quicksort, mergesort,  selection e insertion, dando la opción al usuario de elegir si quiere ordenar ints o floats, ascendente o descendente y con que algoritmo los quiere ordenar con void pointers... */
+
 typedef int (*t_compare)(void *, void *);
 typedef void (*t_swap)(void * , void * );
 typedef void (*t_sort)(void *, size_t, size_t, t_compare, t_swap );
@@ -71,7 +72,6 @@ void selectionSort(void * vector, size_t count, size_t size, t_compare compare, 
 }
 
 /* Implementación de funciones callback para enteros */
-
 int ascInt(void * pa, void * pb)
 {
     int * a = (int *)pa;
@@ -149,36 +149,7 @@ void imprimeFloat(float * vector, int count)
 
 int main(int argc, const char * argv[])
 {   
-    /* Ordenar números enteros */   
-    int * vector = (int *) malloc(N * sizeof(int));
-    int * aux = vector;
-    int * last = vector + N;
-    
-    for (; aux < last; ++aux)
-        *aux = rand() % 100;
-    
-    printf("\n\n--- Enteros ---\n\n");
-    imprimeInt(vector, N);
-    sort(&selectionSort, vector, N, sizeof(*vector), &ascInt, &swapInt);
-    printf("\n\n--- Enteros Ordenados ---\n\n");
-    imprimeInt(vector, N);
-    free(vector);
-    
-    /* Ordenar números flotantes */
-    float * vectorf = (float *) malloc(N * sizeof(float));
-    float * auxf = vectorf;
-    float * lastf = vectorf + N;
-    
-    for (; auxf < lastf; ++auxf)
-        *auxf = rand() % 100 * 1.5;
-    
-    printf("\n\n--- Flotantes ---\n\n");
-    imprimeFloat(vectorf, N);
-    sort(&insertionSort, vectorf, N, sizeof(*vectorf), &descFloat, &swapFloat);
-    printf("\n\n--- Flotantes Ordenados ---\n\n");   
-    imprimeFloat(vectorf, N);
-    
-    free(vectorf);
-    
+       
     return 0;
 }
+
