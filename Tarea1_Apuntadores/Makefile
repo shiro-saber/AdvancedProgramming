@@ -1,4 +1,4 @@
-ALL:resultado resultado2 resultado3
+ALL:Ships Hospital Quiz
 ALL:$(ALL)
 CFLAGS=-std=c99
 
@@ -7,7 +7,6 @@ CFLAGS=-std=c99
 clean:
 	@echo Porque Kenny!
 	 \rm -f *.o $(ALL)
-	 \rm -f resultado resultado2 resultado3
 	 \rm -f Ships Hospital Quiz
 
 resultado: Ships 

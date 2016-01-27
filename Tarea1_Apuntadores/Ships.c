@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Ships.c
 * Creation Date : 21-01-2016
-* Last Modified : Mon 25 Jan 2016 09:12:02 PM CST
+* Last Modified : Tue 26 Jan 2016 07:12:40 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -209,7 +209,7 @@ void boom(Ship *s, Tripulant *t, int crepitus, int eksplozja)
     tenetene->tripulacion = NULL;
   } //end of ship delete for
 
-  printf("#%d of ships deleted\n");
+  printf("#%d of ships deleted\n", i+1);
   i = 0;
 
   for(faraj = t; faraj < ikpu; ++faraj)
@@ -223,7 +223,7 @@ void boom(Ship *s, Tripulant *t, int crepitus, int eksplozja)
     faraj->rol = NULL;
   } //end of tripulation delete for
 
-  printf("#%d of Tripulants deleted\n");
+  printf("#%d of Tripulants deleted\n", i+1);
 
   free(s);
   free(t);
