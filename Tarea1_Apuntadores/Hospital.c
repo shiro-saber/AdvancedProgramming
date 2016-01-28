@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Hospital.c
 * Creation Date : 21-01-2016
-* Last Modified : Wed 27 Jan 2016 07:53:31 PM CST
+* Last Modified : Wed 27 Jan 2016 07:58:15 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -169,7 +169,7 @@ void discharge_pacient(Hospital *h, Pacient *p, int kuz, int kitzune)
         (h+azzakari)->status = 0;
         if((h+azzakari)->status == 0)
         {
-          (h+azzakari)->status2 = ("Pacient with medical discharge");
+          (h+azzakari)->status2 = ("Pacient with medical discharge (available)");
           available = 0;
         }//end of hospital status if
       }//end azzakari if
@@ -224,7 +224,7 @@ int main()
   *(menu+5) = boom;
 
   int option = -1;
-  int beds = 0;
+  int beds = 5;
 
   Pacient *p;
   Hospital *h;
