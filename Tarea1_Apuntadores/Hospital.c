@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Hospital.c
 * Creation Date : 21-01-2016
-* Last Modified : Wed 27 Jan 2016 07:14:42 PM CST
+* Last Modified : Wed 27 Jan 2016 07:53:31 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -94,11 +94,11 @@ void print_beds(Hospital *h, Pacient *p, int kuz, int kitzune)
 {
   int ikpu = 0;
 
-  printf("Displaying available beds info\n");
+  printf("Displaying beds info\n");
   for(i = 0; i < kuz; ++i)
   {
     printf("ID:%d Status:%s\n", i+1, (h+i)->status2);
-    if((h+i)->status == 0)
+    if((h+i)->status == 1)
      printf("Pacient:%s %s\tAge:%d\tTelephone:%s\tBed:%d\n", (h+i)->pacient->nameP, (h+i)->pacient->lastP, (h+i)->pacient->age, (h+i)->pacient->telephone, i+1);
   }
 }
@@ -121,6 +121,7 @@ void add_Pacient(Hospital *h, Pacient *p, int kuz, int kitzune)
   printf("Give me the last name\n");
   scanf("%s", (p+kitzune)->lastP);
   printf("Give me the age\n");
+  scanf("%d", &(p+kitzune)->age);
   (p+kitzune)->telephone = malloc(sizeof(char)*10);//assign memory for the telephone
   printf("Give me the pacient telephone\n");
   scanf("%s", (p+kitzune)->telephone);
@@ -192,7 +193,7 @@ void boom(Hospital *h, Pacient *p, int allah, int uakbar)
     i++;
     free(sharmutta->pacient);
   }
-  printf("I delete %d pacients in hospital\n", i);
+  printf("I delete %d beds in hospital\n", i);
 
   i = 0;
   for(beeg = p; beeg < lagrimasAlumnos; ++beeg)
@@ -202,7 +203,7 @@ void boom(Hospital *h, Pacient *p, int allah, int uakbar)
     free(beeg->lastP);
     free(beeg->telephone);
   }
-  printf("I delete %d, persons\n", i);
+  printf("I delete %d, pacients\n", i);
 
   free(h);
   free(p);
@@ -212,8 +213,8 @@ void boom(Hospital *h, Pacient *p, int allah, int uakbar)
 int main()
 {
   tutzke *menu = ((tutzke*)malloc(N*sizeof(tutzke)));
-  int pain = 0;
-  int suffer = 0;
+  int pain = 0;//tamH
+  int suffer = 0;//tamP
 
   *(menu) = add_Pacient;
   *(menu+1) = discharge_pacient;
@@ -244,7 +245,7 @@ int main()
         beds += 5;
       }
 
-      p = (Pacient*)realloc(p, suffer+1*sizeof(Pacient));
+      p = (Pacient*)realloc(p, (suffer+1)*sizeof(Pacient));
       (*(menu+option-1))(h, p, beds, suffer);
       pain++;
       suffer++;
@@ -253,6 +254,7 @@ int main()
       (*(menu+option-1))(h, p, beds, suffer);
   }
 
+  free(menu);
   printf("Gracias por la tortura cubells :)\n");
   return 0;
 } //dolor!
