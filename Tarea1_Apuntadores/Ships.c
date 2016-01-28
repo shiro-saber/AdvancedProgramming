@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Ships.c
 * Creation Date : 21-01-2016
-* Last Modified : Wed 27 Jan 2016 10:44:34 PM CST
+* Last Modified : Thu 28 Jan 2016 03:57:02 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -25,6 +25,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
  * and assign a tripulant to a ship. */
 
 int i = 0;
+int size = 0;//size of ships
+int size2= 0;//size of tripulant
 
 /* TYPEDEFS */
 typedef struct
@@ -45,6 +47,7 @@ typedef struct
   int max;
   int occuped;
   int occuped2;
+  int owner;
   Tripulant *propietario;
   Tripulant *tripulacion;
 
@@ -69,6 +72,7 @@ void add_tripulant(Tripulant *t, int kuz)
   (t+kuz)->rol = malloc(sizeof(char)*10);//assign space for the rol array
   printf("Tell me the tripulant's rol\n");
   scanf("%s", (t+kuz)->rol);
+  size2++;
 }
 
 void add_ship(Ship *s, int kuzemac)
@@ -88,6 +92,7 @@ void add_ship(Ship *s, int kuzemac)
   scanf("%d", &(s+kuzemac)->max);
   azzakari = (s+kuzemac)->max;
   (s+kuzemac)->tripulacion = malloc(sizeof(Ship)*(azzakari));
+  size++;
 }
 
 void print_ship(Ship *s, int sharmutta)
@@ -108,29 +113,43 @@ void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
   {
     printf("You want to add:\n1. Owner\n2. Tripulant\n");
     scanf("%d", &option);
-    if(option == 1)
+    if(option == 1 && (s+filahiana)->owner != 1)
     {
       printf("Add the owner to what ship?\n");
       print_ship(s, kitzune);
       printf("Tell me the ship ID\n");
       scanf("%d", &filahiana);
       filahiana--;
-      for(i = 0; i < modishness; ++i)
-        if((t+i)->status == 0 && strcmp((t+i)->rol, ("owner")) == 0)
-          printf("ID:%d\tOwner:%s %s\tAge:%d years\n", (i+1), (t+i)->nombreT, (t+i)->apellidoT, (t+i)->edad);
 
-      if(modishness > 0)
+      if(filahiana < size)
       {
-        printf("Tell me the owner id\n");
-        scanf("%d", &mucha);
-        mucha--;
-        (t+mucha)->status = 1;
-        *((s+filahiana)->propietario+(s+filahiana)->occuped2) = *(t+mucha);
-        (s+filahiana)->occuped++;
+        for(i = 0; i < modishness; ++i)
+          if((t+i)->status == 0 && strcmp((t+i)->rol, ("owner")) == 0)
+            printf("ID:%d\tOwner:%s %s\tAge:%d years\n", (i+1), (t+i)->nombreT, (t+i)->apellidoT, (t+i)->edad);
+      
+        if(modishness > 0)
+        {
+          printf("Tell me the owner id\n");
+          scanf("%d", &mucha);
+          mucha--;
+          if (mucha < size2)
+          {
+            (t+mucha)->status = 1;
+            *((s+filahiana)->propietario+(s+filahiana)->occuped) = *(t+mucha);
+            (s+filahiana)->occuped++;
+            (s+filahiana)->owner++;
+          }
+          else
+            printf("There is no owner with that id\n");
+        }
+        else
+          printf("There is no owners\n");
       }
       else
-        printf("There is no owners\n");
+        printf("That ship doesn't exist\n");
     }// end if option 1
+    else if((s+filahiana)->owner == 1 && option < 2)
+      printf("Ther is alredy an owner to this ship!\n");
     else if(option == 2)
     {
       printf("Add the tripulant to what ship?\n");
@@ -138,52 +157,77 @@ void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
       printf("Tell me the ships id\n");
       scanf("%d", &filahiana);
       filahiana--;
-      if((s+filahiana)->occuped < (s+filahiana)->max)
+      
+      if(filahiana < size)
       {
-        printf("Tripulants: \n");
-        for(i = 0; i < modishness; ++i)
-          if((t+i)->status == 0 && strcmp((t+i)->rol,("owner")) != 0)
-            printf("ID:%d\tName:%s %s\tAge:%d years\n", (i+1), (t+i)->nombreT, (t+i)->apellidoT, (t+i)->edad);
-
-        if(modishness > 0)
+        if((s+filahiana)->occuped < (s+filahiana)->max)
         {
-          printf("Give me tripulant's id:\n");
-          scanf("%d", &mucha);
-          mucha--;
-          (t+mucha)->status = 1;
-          *((s+filahiana)->tripulacion + (s+filahiana)->occuped) = *(t+mucha);
-          (s+filahiana)->occuped2++;
+          printf("Tripulants: \n");
+          for(i = 0; i < modishness; ++i)
+            if((t+i)->status == 0 && strcmp((t+i)->rol,("owner")) != 0)
+              printf("ID:%d\tName:%s %s\tAge:%d years\n", (i+1), (t+i)->nombreT, (t+i)->apellidoT, (t+i)->edad);
+
+          if(modishness > 0)
+          {
+            printf("Give me tripulant's id:\n");
+            scanf("%d", &mucha);
+            mucha--;
+            if(mucha < size2)
+            {
+              (t+mucha)->status = 1;
+              *((s+filahiana)->tripulacion + (s+filahiana)->occuped2) = *(t+mucha);
+              (s+filahiana)->occuped2++;
+            }
+            else
+              printf("There are no tripulant with that id\n");
+          }
+          else
+            printf("There are no tripulants yet\n");
         }
         else
-          printf("There are no tripulants yet\n");
+          printf("There's no more space in this ship\n");
       }
       else
-        printf("There's no more space in this ship\n");
-      }
+        printf("There is no ship with that id\n");
     }
     else
-      printf("There are no ships yet\n");
+      printf("Good try but that are no an option, make suffer anyone else\n");
+  }
+  else
+    printf("There are no ships yet\n");
 }
 
 void print_tripulation(Ship *s, Tripulant *t, int allah, int uakbar)
 {
   int j = 0;
+  int k = 0;
+  
   printf("Displaying Tripulation and Ships Info:\n");
 
   for(i = 0; i < allah; ++i)
   {
     printf("ID:%d Ship:%s\tHeight: %f\tSleeve: %f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, (((s+i)->max)-((s+i)->occuped2)));
 
-    for(j = 0; j < (s+i)->occuped2; ++j)
-      if((s+i)->propietario->status == 1)
-        printf("Owner:%s %s\tAge: %d years", ((s+i)->propietario+j)->nombreT, ((s+i)->propietario+j)->apellidoT, ((s+i)->propietario+j)->edad);
-
     for(j = 0; j < (s+i)->occuped; ++j)
+    {
+      //printf("METIDO EN OWNER\n");
+      if((s+i)->propietario->status == 1)
+      {
+        printf("Owner:%s %s\tAge: %d years\n", ((s+i)->propietario+j)->nombreT, ((s+i)->propietario+j)->apellidoT, ((s+i)->propietario+j)->edad);
+      }
+    }
+
+    for(k = 0; k < (s+i)->occuped2; ++k)
+    {  
+      //printf("METIDO EN TRIPULANT\n");
       if((s+i)->tripulacion->status == 1)
-        printf("Tripulant:%s %s\tAge:%d years\tRole:%s\n", ((s+i)->tripulacion+j)->nombreT, ((s+i)->tripulacion+j)->apellidoT, ((s+i)->tripulacion+j)->edad, ((s+i)->tripulacion+j)->rol);
+      {
+        //printf("METIDO EN IF TRIUPLANT\n");
+        printf("Tripulant:%s %s\tAge:%d years\tRole:%s\n", ((s+i)->tripulacion+k)->nombreT, ((s+i)->tripulacion+k)->apellidoT, ((s+i)->tripulacion+k)->edad, ((s+i)->tripulacion+k)->rol);
+      }
+    }
   }
 }
-
 void boom(Ship *s, Tripulant *t, int crepitus, int eksplozja)
 {
   Ship *tenetene; //ship counter, free one by one
