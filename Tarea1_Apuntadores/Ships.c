@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Ships.c
 * Creation Date : 21-01-2016
-* Last Modified : Wed 27 Jan 2016 10:25:08 PM CST
+* Last Modified : Wed 27 Jan 2016 10:44:34 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -135,7 +135,7 @@ void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
     {
       printf("Add the tripulant to what ship?\n");
       print_ship(s, kitzune);
-      printf("Tell me the ships id");
+      printf("Tell me the ships id\n");
       scanf("%d", &filahiana);
       filahiana--;
       if((s+filahiana)->occuped < (s+filahiana)->max)
@@ -176,13 +176,14 @@ void print_tripulation(Ship *s, Tripulant *t, int allah, int uakbar)
 
     for(j = 0; j < (s+i)->occuped2; ++j)
       if((s+i)->propietario->status == 1)
-        printf("Owner:%s %s\tAge: %d years", ((s+i)->propietario)->nombreT, ((s+i)->propietario)->apellidoT, ((s+i)->propietario)->edad);
+        printf("Owner:%s %s\tAge: %d years", ((s+i)->propietario+j)->nombreT, ((s+i)->propietario+j)->apellidoT, ((s+i)->propietario+j)->edad);
 
     for(j = 0; j < (s+i)->occuped; ++j)
       if((s+i)->tripulacion->status == 1)
         printf("Tripulant:%s %s\tAge:%d years\tRole:%s\n", ((s+i)->tripulacion+j)->nombreT, ((s+i)->tripulacion+j)->apellidoT, ((s+i)->tripulacion+j)->edad, ((s+i)->tripulacion+j)->rol);
   }
 }
+
 void boom(Ship *s, Tripulant *t, int crepitus, int eksplozja)
 {
   Ship *tenetene; //ship counter, free one by one
