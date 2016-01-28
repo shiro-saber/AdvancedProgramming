@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Ships.c
 * Creation Date : 21-01-2016
-* Last Modified : Tue 26 Jan 2016 07:12:40 PM CST
+* Last Modified : Wed 27 Jan 2016 08:38:31 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -95,7 +95,7 @@ void print_ship(Ship *s, int sharmutta)
   int quin;
   printf("Displaying Ships's information:\n");
   for(i = 0; i < sharmutta; ++i)
-    printf("ID: %d Ship: %s\t%.2f\t%.2f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, ((s+i)->max - (s+i)->occuped));
+    printf("ID: %d Ship: %s\t%.2f\t%.2f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, ((s+i)->max - (s+i)->occuped2));
 }
 
 void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
@@ -118,8 +118,13 @@ void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
       filahiana--;
 
       for(i = 0; i < modishness; ++i)
-        if((t+i)->status == 0 && strcmp((t+i)->rol,("propietario")) == 0)
+        if((t+i)->status == 0 && strcmp((t+i)->rol,("owner")) == 0)
           printf("ID - %d\t%s\t%s\t%d\t%s\t%d\n",(i+1),(t+i)->nombreT,(t+i)->apellidoT,(t+i)->edad,(t+i)->rol,(t+i)->status);
+        else
+        {
+          modishness = 0;
+          printf("There are no tripulant's with role owner\n");    
+        }
 
       if(modishness > 0)
       {
@@ -127,8 +132,8 @@ void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
         scanf("%d", &mucha);
         mucha--;
         (t+mucha)->status = 1;
-        *((s+filahiana)->propietario+(s+filahiana)->occuped2) = (*(t+mucha));
-        (s+filahiana)->occuped2++;
+        *((s+filahiana)->propietario+(s+filahiana)->occuped) = (*(t+mucha));
+        (s+filahiana)->occuped++;
        // printf("There are %d tripulants\n", (s+filahiana)->occuped2);
       } //end of modishness if
       else
@@ -146,7 +151,7 @@ void rel_ship_tripulant(Ship *s, Tripulant *t, int kitzune, int modishness)
       {
         printf("Tripulantes\n");
         for(i = 0; i < modishness; ++i)
-          if((t+i)->status == 0 && strcmp((t+i)->rol, ("propietario"))!= 0)
+          if((t+i)->status == 0 && strcmp((t+i)->rol, ("owner"))!= 0)
             printf("ID - %d\t%s\t%s\t%d\t%s\t%d\n", (i+1), (t+i)->nombreT, (t+i)->apellidoT, (t+i)->edad, (t+i)->rol, (t+i)->status);
         
         if(modishness > 0)
@@ -177,15 +182,15 @@ void print_tripulation(Ship *s, Tripulant *t, int allah, int uakbar)
   
   for(i = 0; i < allah; ++i)
   {
-    printf("ID: %d Ship: %s\tLenght: %.2f\tSleeve: %.2f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, ((s+i)->max - (s+i)->occuped));
+    printf("ID: %d Ship: %s\tLenght: %.2f\tSleeve: %.2f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, ((s+i)->max - (s+i)->occuped2));
 
     for(k = 0; k < (s+i)->occuped2; ++k)
       if((s+i)->propietario->status == 1)
-        printf("Tripulant:\n%s\t%s\tEdad: %daños\tRol: %s\t%d\n", ((s+i)->tripulacion+k)->nombreT, ((s+i)->tripulacion+k)->apellidoT, ((s+i)->tripulacion+k)->edad, ((s+i)->tripulacion+k)->rol, ((s+i)->tripulacion+k)->status);
+        printf("Tripulant:\n%s %s\tAge: %d years\tRol: %s\t%d\n", ((s+i)->tripulacion)->nombreT, ((s+i)->tripulacion)->apellidoT, ((s+i)->tripulacion)->edad, ((s+i)->tripulacion)->rol, ((s+i)->tripulacion)->status);
 
     for(k = 0; (s+i)->occuped; ++k)
       if((s+i)->tripulacion->status == 1)
-        printf("Tripulant:\n%s\t%s\tEdad: %daños\tRol: %s\t%d\n", ((s+i)->tripulacion+k)->nombreT, ((s+i)->tripulacion+k)->apellidoT, ((s+i)->tripulacion+k)->edad, ((s+i)->tripulacion+k)->rol, ((s+i)->tripulacion+k)->status);
+        printf("Owner:\n%s %s\tAge: %d years\tRol: %s\t%d\n", ((s+i)->tripulacion)->nombreT, ((s+i)->tripulacion)->apellidoT, ((s+i)->tripulacion)->edad, ((s+i)->tripulacion)->rol, ((s+i)->tripulacion)->status);
   }
 }
 
@@ -209,7 +214,7 @@ void boom(Ship *s, Tripulant *t, int crepitus, int eksplozja)
     tenetene->tripulacion = NULL;
   } //end of ship delete for
 
-  printf("#%d of ships deleted\n", i+1);
+  printf("%d # of ships deleted\n", i);
   i = 0;
 
   for(faraj = t; faraj < ikpu; ++faraj)
@@ -223,7 +228,7 @@ void boom(Ship *s, Tripulant *t, int crepitus, int eksplozja)
     faraj->rol = NULL;
   } //end of tripulation delete for
 
-  printf("#%d of Tripulants deleted\n", i+1);
+  printf("%d # of Tripulants deleted\n", i);
 
   free(s);
   free(t);
