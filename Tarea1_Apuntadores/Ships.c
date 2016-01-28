@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Ships.c
 * Creation Date : 21-01-2016
-* Last Modified : Wed 27 Jan 2016 08:38:31 PM CST
+* Last Modified : Wed 27 Jan 2016 08:47:58 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -182,15 +182,15 @@ void print_tripulation(Ship *s, Tripulant *t, int allah, int uakbar)
   
   for(i = 0; i < allah; ++i)
   {
-    printf("ID: %d Ship: %s\tLenght: %.2f\tSleeve: %.2f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, ((s+i)->max - (s+i)->occuped2));
+    printf("ID: %d Ship: %s\tLenght: %.2f\tSleeve: %.2f\tPlaces Remining: %d\n", i+1, (s+i)->nombreS, (s+i)->eslora, (s+i)->manga, ((s+i)->max - (s+i)->occuped));
 
     for(k = 0; k < (s+i)->occuped2; ++k)
       if((s+i)->propietario->status == 1)
-        printf("Tripulant:\n%s %s\tAge: %d years\tRol: %s\t%d\n", ((s+i)->tripulacion)->nombreT, ((s+i)->tripulacion)->apellidoT, ((s+i)->tripulacion)->edad, ((s+i)->tripulacion)->rol, ((s+i)->tripulacion)->status);
+        printf("Owner:\n%s %s\tAge: %d years\tRol: %s\t%d\n", ((s+i)->tripulacion)->nombreT, ((s+i)->tripulacion)->apellidoT, ((s+i)->tripulacion)->edad, ((s+i)->tripulacion)->rol, ((s+i)->tripulacion)->status);
 
     for(k = 0; (s+i)->occuped; ++k)
       if((s+i)->tripulacion->status == 1)
-        printf("Owner:\n%s %s\tAge: %d years\tRol: %s\t%d\n", ((s+i)->tripulacion)->nombreT, ((s+i)->tripulacion)->apellidoT, ((s+i)->tripulacion)->edad, ((s+i)->tripulacion)->rol, ((s+i)->tripulacion)->status);
+        printf("Tripulant:\n%s %s\tAge: %d years\tRol: %s\t%d\n", ((s+i)->tripulacion)->nombreT, ((s+i)->tripulacion)->apellidoT, ((s+i)->tripulacion)->edad, ((s+i)->tripulacion)->rol, ((s+i)->tripulacion)->status);
   }
 }
 
