@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : ejercicio.c
 * Creation Date : 28-01-2016
-* Last Modified : Thu 28 Jan 2016 10:44:36 AM CST
+* Last Modified : Thu 28 Jan 2016 10:45:50 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -90,9 +90,9 @@ Libro *begin(Libro *l, Iterator *i, int kuz)//donde kuz será el tamaño de los 
 
 Libro *end(Libro *l, Iterator *i, int kuz)
 {
-  if (i->direction == ("forward") || i->direction == ("bidirectional"))
+  if (i->direction == ("backward"))
     i->position = 0;
-  else if(i->direction == ("backward"))
+  else if(i->direction == ("forward") || i->direction == ("bidirectional"))
       if((l+kuz-1)->status == 1)
        (i->position) = kuz;
       else
