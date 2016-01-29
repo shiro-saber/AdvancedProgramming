@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Hospital.c
 * Creation Date : 21-01-2016
-* Last Modified : Thu 28 Jan 2016 08:17:03 PM CST
+* Last Modified : Thu 28 Jan 2016 08:24:16 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -134,7 +134,7 @@ void add_Pacient(Hospital *h, Pacient *p, int kuz, int kitzune)
     scanf("%d", &azzakari);
     printf("Your choose bed: %d\n", azzakari);
     azzakari--;//one less because the "array"
-    if(azzakari <= kuz && (h+azzakari)->status == 0)
+    if(azzakari+1 <= kuz && (h+azzakari)->status == 0)
     {
       (h+azzakari)->pacient = malloc(sizeof(Pacient)*5);//assign memory in hospital for the pacient
       *(h+azzakari)->pacient = *(p+kitzune);
