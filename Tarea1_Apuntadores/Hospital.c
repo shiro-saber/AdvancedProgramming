@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : Hospital.c
 * Creation Date : 21-01-2016
-* Last Modified : Wed 27 Jan 2016 07:58:15 PM CST
+* Last Modified : Thu 28 Jan 2016 07:04:16 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -192,6 +192,7 @@ void boom(Hospital *h, Pacient *p, int allah, int uakbar)
   {
     i++;
     free(sharmutta->pacient);
+    free(sharmutta->status2);
   }
   printf("I delete %d beds in hospital\n", i);
 
