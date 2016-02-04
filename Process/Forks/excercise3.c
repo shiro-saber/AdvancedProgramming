@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : excercise3.c
 * Creation Date : 03-02-2016
-* Last Modified : Thu 04 Feb 2016 12:20:57 AM CST
+* Last Modified : Thu 04 Feb 2016 01:30:42 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -28,7 +28,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 int main(int argc, char *argv[])
 {
-  int pid, n, i, r, state;
+  int n, i, r, state;
+  int *pid = (int*)malloc(sizeof(int)*n);
 
   srand((int)time(NULL));
   
@@ -40,15 +41,15 @@ int main(int argc, char *argv[])
 
   for(i = 0; i < n; i++)
   {
-    pid = fork();
+    *(pid+i) = fork();
     r = rand() % 10;
 
-    if(pid < 0) 
+    if(*(pid+i) < 0) 
     {
       printf("Error creating child");
       exit(1);
     } 
-    else if (pid == 0) 
+    else if (*(pid+i) == 0) 
     {
        //printf("Estamos en el proceso hijo con PID = %d y su padre es PPID = %d \n", getpid(), getppid());
       printf("    %d    \t\t%d\t\t  %d\n", getppid() ,getpid(), r);
@@ -57,13 +58,9 @@ int main(int argc, char *argv[])
     } 
     else
     {
-      //sleep(r);
       wait(&state);
     }
-    //sleep(r);
   }
-
-  sleep(r);
 
   return 0;
 }
