@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise1.c
 * Creation Date : 28-01-2016
-* Last Modified : Thu 28 Jan 2016 11:23:49 AM CST
+* Last Modified : Wed 03 Feb 2016 08:38:01 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -35,9 +35,9 @@ int factorial(int kuz)
   return ikpu;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-  pid_t pid;
+  int pid;
   int number = 1;
 
   while(number != 0)
