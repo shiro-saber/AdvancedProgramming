@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : excercise3.c
 * Creation Date : 03-02-2016
-* Last Modified : Thu 04 Feb 2016 01:30:42 PM CST
+* Last Modified : Thu 04 Feb 2016 07:27:26 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
   printf("How many childs?\n");
   scanf("%d", &n);
 
-  printf("Father Process\t\tPid Hijo\tTiempo\n");
+  printf("Father Process\t\tPid Hijo\n");
   printf("    %d  \t\t\n", getpid());
 
   for(i = 0; i < n; i++)
   {
     *(pid+i) = fork();
-    r = rand() % 10;
+    //r = rand() % 10;
 
     if(*(pid+i) < 0) 
     {
@@ -52,15 +52,18 @@ int main(int argc, char *argv[])
     else if (*(pid+i) == 0) 
     {
        //printf("Estamos en el proceso hijo con PID = %d y su padre es PPID = %d \n", getpid(), getppid());
-      printf("    %d    \t\t%d\t\t  %d\n", getppid() ,getpid(), r);
-      //sleep(r);
+      printf("    %d      \t\t%d\n", getppid(), getpid());
+      sleep(rand()%10);
       exit(0);
     } 
-    else
-    {
-      wait(&state);
-    }
   }
+
+  for(i = 0; i < n; i++)
+    if (waitpid(*(pid), &state, 0) != -1)
+        {
+            if (WIFEXITED(state))
+                printf("Ya terminó el hijo con PID %d con valor de retorno %d \n", pid, WEXITSTATUS(state));
+        }
 
   return 0;
 }

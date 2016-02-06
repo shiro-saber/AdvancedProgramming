@@ -1,11 +1,11 @@
-ALL: Factorial Integral Time_Child pstree	
+ALL: Factorial Integral Time_Child pstree Multiprogram
 CFLAGS=-std=c11 -w
 
 .PHONY:clean
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o  Factorial Time_Child pstree Integral
+	 \rm -f *.o  Factorial Time_Child pstree Integral Multiprogram
 
 Factorial: exercise1.o
 	gcc -g exercise1.o -o Factorial
@@ -30,4 +30,10 @@ pstree: exercise4.o
 
 exercise4.o: exercise4.c
 	gcc -g -c $(CFLAGS) exercise4.c
+
+Multiprogram: exercise5.o
+	gcc -g exercise5.o -o Multiprogram
+
+exercise5.o: exercise5.c
+	gcc -g -c $(CFLAGS) exercise5.c
 

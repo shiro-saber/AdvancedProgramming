@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise4.c
 * Creation Date : 04-02-2016
-*     Last Modified : Thu 04 Feb 2016 12:53:33 AM CST
+* Last Modified : Fri 05 Feb 2016 08:12:38 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -23,49 +23,37 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 int main(int argc, char *argv[])
 {
-  int pid, state;
-
   if(argc != 3)
   {
-    printf("Syntax: ./pstree <number of father process> <number of child process for each father>\n");
+    printf("Syntax: ./pstree <number of levels> <number of process in each level>\n");
     
     return -1;
   }
-
-  printf("Father Process\t\tChild Process\t\tGrandChild Process\n");
-  printf("    %d  \t\t\n", getpid());
-
+  
   for(int i = 0; i < atoi(argv[1]); i++)
   {
-    pid = fork();
-    if(pid < 0)
-    {
-      printf("Error creating child\n");
-      exit(1);
-    }
-    else if(pid == 0)
-    {
+    //int left_child = fork();
+    
+    //if(left_child != 0)        //we are the parent
+    //{
       for(int j = 0; j < atoi(argv[2]); j++)
       {
-        pid = fork();
+        int right_child = fork();
+        
+        if(right_child == 0)
+        {
+          for(int k = 0; k < i; k++)
+            printf("   ");
 
-        if (pid < 0)
-        {
-          printf("Error creating child\n");
-          exit(1);
-        }
-        else if(pid == 0)
-        {
-           printf("          \t\t%d\t\t  %d\n", getppid() ,getpid());
+          printf("--->%d\n", getpid());
           exit(0);
         }
-        else
-          wait(&state);
       }
-      printf("    %d    \t\t%d\t\t  \n", getppid() ,getpid());
-    }
-    else
-      wait(&state);
+    //}
+    //else
+    //{
+      //printf("--->%d\n", getpid());
+    //} 
   }
 
   return 0;
