@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : process_exam.c
 * Creation Date : 07-02-2016
-* Last Modified : Mon 08 Feb 2016 10:15:06 AM CST
+* Last Modified : Mon 08 Feb 2016 10:18:45 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
   pid_t pid;
   pid_t sum;
-  int status;
+  int status, k;
 
   if(argc != 2)
   {
@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
   for(int i = 0; i < atoi(argv[1]); ++i)
   {
     pid = fork();
+    k++;
 
     if(pid == -1)
     {
@@ -61,6 +62,8 @@ int main(int argc, char *argv[])
     }
       
   }
+
+  printf("\n\n The total number of process are: %d\n", k);
   return 0;
 }
 
