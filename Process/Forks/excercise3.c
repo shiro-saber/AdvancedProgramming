@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : excercise3.c
 * Creation Date : 03-02-2016
-* Last Modified : Thu 04 Feb 2016 07:27:26 PM CST
+* Last Modified : Mon 08 Feb 2016 02:29:32 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -21,6 +21,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <unistd.h>
 #include <wait.h>
 #include <time.h>
+#include <sys/types.h>
 
 // Make a C program that create N number of child process, each child
 // wait for a random time, the father will print the PID of each child
@@ -29,7 +30,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 int main(int argc, char *argv[])
 {
   int n, i, r, state;
-  int *pid = (int*)malloc(sizeof(int)*n);
+  pid_t *pid = (int*)malloc(sizeof(int)*n);
 
   srand((int)time(NULL));
   
@@ -42,7 +43,6 @@ int main(int argc, char *argv[])
   for(i = 0; i < n; i++)
   {
     *(pid+i) = fork();
-    //r = rand() % 10;
 
     if(*(pid+i) < 0) 
     {
@@ -52,19 +52,19 @@ int main(int argc, char *argv[])
     else if (*(pid+i) == 0) 
     {
        //printf("Estamos en el proceso hijo con PID = %d y su padre es PPID = %d \n", getpid(), getppid());
-      printf("    %d      \t\t%d\n", getppid(), getpid());
       sleep(rand()%10);
+      printf("    %d      \t\t%d\n", getppid(), getpid());
       exit(0);
-    } 
+    }
+    else
+    {
+      for(i = 0; i < n; i++)
+        if((waitpid(*(pid+i), &state, 0) != -1))
+          printf("Ya terminó el hijo con PID %d \n", *(pid+i));
+
+      wait(NULL);
+    }
   }
-
-  for(i = 0; i < n; i++)
-    if (waitpid(*(pid), &state, 0) != -1)
-        {
-            if (WIFEXITED(state))
-                printf("Ya terminó el hijo con PID %d con valor de retorno %d \n", pid, WEXITSTATUS(state));
-        }
-
   return 0;
 }
 

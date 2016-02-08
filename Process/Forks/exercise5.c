@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise5.c
 * Creation Date : 05-02-2016
-* Last Modified : Fri 05 Feb 2016 11:05:29 PM CST
+* Last Modified : Mon 08 Feb 2016 05:26:35 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -43,8 +43,10 @@ int main (int argc, char *argv[])
         cvalue = optarg;
         break;
       case '?':
-        if (optopt == 'c')
-          fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+        if (optopt == 'p')
+          fprintf (stderr, "Option -%p requires an argument.\n", optopt);
+        else if (optopt == 'n')
+          fprintf(stderr, "Option -%n requires an argument,\n",optopt);
         else if (isprint (optopt))
           fprintf (stderr, "Unknown option `-%c'.\n", optopt);
         else
@@ -74,7 +76,7 @@ int main (int argc, char *argv[])
     {
      if((waitpid(pid, &status, 0) != -1))
         if(WIFEXITED(status))
-          printf("Child finish with pid: %d\n", getpid()); 
+          printf("Child finish with pid: %d\n", pid); 
     }
   }
 

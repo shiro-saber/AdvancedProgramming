@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise4.c
 * Creation Date : 04-02-2016
-* Last Modified : Fri 05 Feb 2016 08:12:38 PM CST
+* Last Modified : Mon 08 Feb 2016 11:18:58 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -20,40 +20,46 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <stdlib.h>
 #include <unistd.h>
 #include <wait.h>
+#include <sys/types.h>
 
 int main(int argc, char *argv[])
 {
+  pid_t child;
+  int i, j, k;
+  int lvl = atoi(argv[1]);
+  int proc = atoi(argv[2]);
+
   if(argc != 3)
   {
     printf("Syntax: ./pstree <number of levels> <number of process in each level>\n");
     
     return -1;
   }
-  
-  for(int i = 0; i < atoi(argv[1]); i++)
-  {
-    //int left_child = fork();
-    
-    //if(left_child != 0)        //we are the parent
-    //{
-      for(int j = 0; j < atoi(argv[2]); j++)
-      {
-        int right_child = fork();
-        
-        if(right_child == 0)
-        {
-          for(int k = 0; k < i; k++)
-            printf("   ");
 
-          printf("--->%d\n", getpid());
-          exit(0);
-        }
+  printf("%s %d %d\n", argv[0], lvl, proc);
+
+  for (k = 0; k < lvl; k++)
+  {
+    for(j = 0; j < proc; j++)
+    {
+      child = fork();
+
+      if(child < 0)
+      {
+        printf("Error creating child\n");
+        exit(1);
       }
-    //}
-    //else
-    //{
-      //printf("--->%d\n", getpid());
-    //} 
+      else if(child == 0)
+      {
+        for(i = 0; i < k; ++i)
+          printf("    ");
+
+        printf("--->%d\n", getpid());
+        //break;
+      }
+      else
+        wait(NULL);
+    }
   }
 
   return 0;

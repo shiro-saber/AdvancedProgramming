@@ -5,35 +5,20 @@ CFLAGS=-std=c11 -w
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o  Factorial Time_Child pstree Integral Multiprogram
+	 \rm -f Factorial Integral Time_Child pstree Multiprogram
 
-Factorial: exercise1.o
-	gcc -g exercise1.o -o Factorial
+Factorial: exercise1.c
+	gcc $(CFLAGS) exercise1.c -g -o Factorial
 
-exercise1.o: exercise1.c
-	gcc -g -c $(CFLAGS) exercise1.c
+Integral: exercise2.c
+	gcc $(CFLAGS) exercise2.c -g -o Integral
 
-Integral: exercise2.o
-	gcc -g exercise2.o -o Integral
+Time_Child: excercise3.c
+	gcc $(CFLAGS) excercise3.c -g -o Time_Child
 
-exercise2.o: exercise2.c
-	gcc -g -c $(CFLAGS) exercise2.c
+pstree: exercise4.c
+	gcc $(CFLAGS) exercise4.c -g -o pstree
 
-Time_Child: excercise3.o
-	gcc -g excercise3.o -o Time_Child
-
-excercise3.o: excercise3.c
-	gcc -g -c $(CFLAGS) excercise3.c
-
-pstree: exercise4.o
-	gcc -g exercise4.o -o pstree
-
-exercise4.o: exercise4.c
-	gcc -g -c $(CFLAGS) exercise4.c
-
-Multiprogram: exercise5.o
-	gcc -g exercise5.o -o Multiprogram
-
-exercise5.o: exercise5.c
-	gcc -g -c $(CFLAGS) exercise5.c
+Multiprogram: exercise5.c
+	gcc $(CFLAGS) exercise5.c -g -o Multiprogram
 
