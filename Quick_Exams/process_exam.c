@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : process_exam.c
 * Creation Date : 07-02-2016
-* Last Modified : Mon 08 Feb 2016 10:12:41 AM CST
+* Last Modified : Mon 08 Feb 2016 10:15:06 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
       if((waitpid(pid, &status, 0) != -1))
       {
         if(WIFEXITED(status))
-          sum += WEXITSTATUS(status);
+          printf("Son with pid: %d DONE!\n", pid);
       }
     }
       
