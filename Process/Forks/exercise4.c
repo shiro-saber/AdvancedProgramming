@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise4.c
 * Creation Date : 04-02-2016
-* Last Modified : Tue 09 Feb 2016 02:45:29 PM CST
+* Last Modified : Tue 09 Feb 2016 02:52:55 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     if (argc != 3)
     {
-        printf("Syntax: ./pstree <number of levels> <number of process in each level>\n");
+        fprintf(stderr, "Syntax: %s <number of levels> <number of process in each level>\n", argv[0]);
         return -1;
     }
     int lvl = atoi(argv[1]);
