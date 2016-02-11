@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : excercise3.c
 * Creation Date : 03-02-2016
-* Last Modified : Mon 08 Feb 2016 02:29:32 PM CST
+* Last Modified : Thu 11 Feb 2016 05:12:53 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -31,13 +31,11 @@ int main(int argc, char *argv[])
 {
   int n, i, r, state;
   pid_t *pid = (int*)malloc(sizeof(int)*n);
-
-  srand((int)time(NULL));
   
   printf("How many childs?\n");
   scanf("%d", &n);
 
-  printf("Father Process\t\tPid Hijo\n");
+  printf("Father Process\t\tPid Hijo\t\tTime\n");
   printf("    %d  \t\t\n", getpid());
 
   for(i = 0; i < n; i++)
@@ -51,20 +49,20 @@ int main(int argc, char *argv[])
     } 
     else if (*(pid+i) == 0) 
     {
-       //printf("Estamos en el proceso hijo con PID = %d y su padre es PPID = %d \n", getpid(), getppid());
-      sleep(rand()%10);
-      printf("    %d      \t\t%d\n", getppid(), getpid());
-      exit(0);
-    }
-    else
-    {
-      for(i = 0; i < n; i++)
-        if((waitpid(*(pid+i), &state, 0) != -1))
-          printf("Ya terminó el hijo con PID %d \n", *(pid+i));
-
-      wait(NULL);
+      srand((int)time(NULL));
+      r = rand() % 10;
+      printf("    %d      \t\t%d\t\t    %d\n", getppid(), getpid(), r);
+      return 0;
     }
   }
+
+  pid_t pt;
+  
+  while ((pt = wait(NULL)) > 0)
+    printf("Termino el proceso: %d\n", pt);
+  
+  printf("Todos los hijos han terminado\n");
+  free(pid);
   return 0;
 }
 
