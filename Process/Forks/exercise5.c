@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise5.c
 * Creation Date : 05-02-2016
-* Last Modified : Thu 11 Feb 2016 04:20:54 PM CST
+* Last Modified : Thu 11 Feb 2016 05:53:21 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -26,7 +26,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 int main (int argc, char *argv[])
 {
-  pid_t pid;
+  pid_t *pid; 
   char *cvalue;
   char *aflag;
   int index, status;
@@ -61,24 +61,26 @@ int main (int argc, char *argv[])
   for (index = optind; index < argc; index++)
     printf ("Non-option argument %s\n", argv[index]);
  
+   pid = (int*)malloc(sizeof(int)*atoi(aflag));
+
   for(int i = 0; i < atoi(aflag); i++)
   {
-    pid = fork();
-    if(pid == -1)
+    *(pid+i) = fork();
+    if(*(pid+i) == -1)
       printf("Error creating child");
-    else if(pid == 0)
+    else if(*(pid+i) == 0)
     {
       printf("Child with pid: %d", getpid());
       execvp(cvalue,NULL);
       wait(NULL);
     }
-    else
-    {
-     if((waitpid(pid, &status, 0) != -1))
-        if(WIFEXITED(status))
-          printf("Child finish with pid: %d\n", pid); 
-    }
   }
+
+  pid_t kuz;
+  
+  while ((kuz = wait(NULL)) > 0)
+    printf("Termino el proceso: %d\n", kuz);
+
 
   return 0;
 }
