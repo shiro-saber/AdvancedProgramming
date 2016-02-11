@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : excercise3.c
 * Creation Date : 03-02-2016
-* Last Modified : Thu 11 Feb 2016 05:12:53 PM CST
+* Last Modified : Thu 11 Feb 2016 05:47:21 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 {
   int n, i, r, state;
   pid_t *pid = (int*)malloc(sizeof(int)*n);
-  
+   
   printf("How many childs?\n");
   scanf("%d", &n);
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
   for(i = 0; i < n; i++)
   {
     *(pid+i) = fork();
-
+    
     if(*(pid+i) < 0) 
     {
       printf("Error creating child");
@@ -49,17 +49,18 @@ int main(int argc, char *argv[])
     } 
     else if (*(pid+i) == 0) 
     {
-      srand((int)time(NULL));
-      r = rand() % 10;
-      printf("    %d      \t\t%d\t\t    %d\n", getppid(), getpid(), r);
+      srand((int)time(NULL)^(getpid()<<1));
+      r = rand() % 10;  
+      printf("    %d      \t\t  %d     \t\t   %d\n", getppid(), getpid(), r);
+      sleep(r);
       return 0;
     }
   }
 
-  pid_t pt;
+  pid_t kuz;
   
-  while ((pt = wait(NULL)) > 0)
-    printf("Termino el proceso: %d\n", pt);
+  while ((kuz = wait(NULL)) > 0)
+    printf("Termino el proceso: %d\n", kuz);
   
   printf("Todos los hijos han terminado\n");
   free(pid);
