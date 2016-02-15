@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : factorial_multipipes.c
 * Creation Date : 14-02-2016
-* Last Modified : Sun 14 Feb 2016 09:11:18 PM CST
+* Last Modified : Mon 15 Feb 2016 01:55:08 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -50,9 +50,12 @@ int main(int argc, char *argv[])
 
   if(pid == 0)
   {
-    close(pip[1]);
+    /* first pipe */
+    close(pip[1]); 
     int num;
     read(pip[0], &num, sizeof(int));
+
+    /* second pipe */
     close(pip2[0]);
     int res = factorial(num);
     write(pip2[1], &res, sizeof(int));
@@ -64,15 +67,17 @@ int main(int argc, char *argv[])
   }
   else
   {
+    /* first pipe */
     close(pip[0]);
     int num, res;
     printf("Give me a number: ");
     scanf("%d", &num);
-
     write(pip[1], &num, sizeof(int));
+    
+    /* second pipe */
     close(pip2[1]);
     read(pip2[0], &res, sizeof(int));
-
+    
     printf("The result it's: %d\n", res);
   }
 

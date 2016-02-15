@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : fifo_read.c
 * Creation Date : 08-02-2016
-* Last Modified : Sun 14 Feb 2016 09:40:16 PM CST
+* Last Modified : Mon 15 Feb 2016 01:47:19 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
   while (leidos = read(fd, &i, sizeof(int))) 
   {
-    if(i > 0)
+    if(i >= 0)
     {
       int j = 2;
       int f = 1;
