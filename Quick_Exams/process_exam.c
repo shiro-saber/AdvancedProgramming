@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : process_exam.c
 * Creation Date : 07-02-2016
-* Last Modified : Mon 08 Feb 2016 10:18:45 AM CST
+* Last Modified : Mon 15 Feb 2016 02:04:34 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -22,9 +22,16 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <wait.h>
 #include <sys/types.h>
 
+// Make a program that recives the number of process to create
+// each process will get the average between him and his father
+// and finally make the father wait all the child process to
+// end.
+// NOTES: The number of process to create will pass as a parameter
+// from terminal.
+
 int main(int argc, char *argv[])
 {
-  pid_t pid;
+  pid_t *pid;
   pid_t sum;
   int status, k;
 
@@ -35,33 +42,31 @@ int main(int argc, char *argv[])
     return -1;
   }
 
+  pid = (pid_t*)malloc(sizeof(pid_t)*atoi(argv[1]));
+
   for(int i = 0; i < atoi(argv[1]); ++i)
   {
-    pid = fork();
+    *(pid+i) = fork();
     k++;
 
-    if(pid == -1)
+    if(*(pid+i) == -1)
     {
       printf("Error creating child\n");
       exit(1);
     }
-    else if(pid == 0)
+    else if(*(pid+i) == 0)
     {
       printf("Son with pid %d with father %d\n", getpid(), getppid());
       sum = (getpid()+getppid());
       printf("The average id: %d\n", sum/2);
       exit(0);
-    }
-    else
-    {
-      if((waitpid(pid, &status, 0) != -1))
-      {
-        if(WIFEXITED(status))
-          printf("Son with pid: %d DONE!\n", pid);
-      }
-    }
-      
+    } 
   }
+
+  pid_t kuz;
+  
+  while ((kuz = wait(NULL)) > 0)
+    printf("Termino el proceso: %d\n", kuz);
 
   printf("\n\n The total number of process are: %d\n", k);
   return 0;
