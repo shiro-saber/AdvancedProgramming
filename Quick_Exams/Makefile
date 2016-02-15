@@ -1,4 +1,4 @@
-ALL: void_pointer process
+ALL: void_pointer process pipes
 ALL:$(ALL)
 CFLAGS=-std=c99 -w
 
@@ -8,14 +8,11 @@ clean:
 	@echo Porque Kenny!
 	 \rm -f *.o $(ALL) void_pointer process
 
-void_pointer: pointers.o
-	gcc -g pointers.o -o void_pointer
+void_pointer: pointers.c
+	gcc $(CFLAGS) pointers.c -g -o void_pointer
 
-pointers.o: pointers.c
-	gcc -g -c $(CFLAGS) pointers.c
+process: process_exam.c
+	gcc $(CFLAGS) process_exam.c -g -o process
 
-process: process_exam.o
-	gcc -g process_exam.o -o process
-
-process_exam.o: process_exam.c
-	gcc -g -c $(CFLAGS) process_exam.c
+pipes: pipes_exam.c
+	gcc $(CFLAGS) pipes_exam.c -g -o pipes
