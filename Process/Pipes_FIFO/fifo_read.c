@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
       for(j; j <= i; ++j)
         f *= j;
 
-      printf("El factorial de %d es: %d\n", i, f);    
+      printf("%d! it's: %d\n", i, f);    
     }
   }
 
