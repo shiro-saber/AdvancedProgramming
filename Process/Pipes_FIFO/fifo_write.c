@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : fifo_write.c
 * Creation Date : 08-02-2016
-* Last Modified : Mon 08 Feb 2016 11:57:49 AM CST
+* Last Modified : Sun 14 Feb 2016 09:39:20 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -25,24 +25,27 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 int main(int argc, char *argv[])
 {
-   int error = mkfifo("/home/shiro-saber/Documents/ProgramacionAvanzada/Procesos/Pipes_FIFO/", 0777);
+   int error = mkfifo("/home/shiro-saber/Documents/ProgramacionAvanzada/Process/Pipes_FIFO/fifo", 0777);
     
     if (error) {
         printf("Error al crear el FIFO\n");
         exit(-1);
     }
     
-    int fd = open("/home/shiro-saber/Documents/ProgramacionAvanzada/Procesos/Pipes_FIFO/", O_WRONLY);
+    int fd = open("/home/shiro-saber/Documents/ProgramacionAvanzada/Process/Pipes_FIFO/fifo", O_WRONLY);
     
-    int i = 0;
-    
-    while (true) 
+    printf("If you want to exit please enter a number lower than 0\n");
+
+    int num = 0;
+
+    while(num >= 0) 
     {
-        write(fd, &i, sizeof(int));
+      scanf("%d", &num);
+      write(fd, &num, sizeof(int));
     }
-    
+
     close(fd);
-    unlink("/home/shiro-saber/Documents/ProgramacionAvanzada/Procesos/Pipes_FIFO/");
+    unlink("/home/shiro-saber/Documents/ProgramacionAvanzada/Process/Pipes_FIFO/fifo");
 
 
   return 0;

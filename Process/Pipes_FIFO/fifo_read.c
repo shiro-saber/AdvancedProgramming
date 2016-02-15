@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : fifo_read.c
 * Creation Date : 08-02-2016
-* Last Modified : Mon 08 Feb 2016 11:26:34 AM CST
+* Last Modified : Sun 14 Feb 2016 09:40:16 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -28,13 +28,24 @@ int main(int argc, char *argv[])
   int fd;
   int leidos = 1;
     
-  fd = open("/home/shiro-saber/Documents/ProgramacionAvanzada/Procesos/Pipes_FIFO/", O_RDONLY);
+  fd = open("/home/shiro-saber/Documents/ProgramacionAvanzada/Process/Pipes_FIFO/fifo", O_RDONLY);
     
-  int i = -1;
-    
+  int i = -1; 
+
   while (leidos = read(fd, &i, sizeof(int))) 
-        printf("%d\n", i);
-      
+  {
+    if(i > 0)
+    {
+      int j = 2;
+      int f = 1;
+  
+      for(j; j <= i; ++j)
+        f *= j;
+
+      printf("El factorial de %d es: %d\n", i, f);    
+    }
+  }
+
   close(fd); 
 
   return 0;
