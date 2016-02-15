@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : excercise3.c
 * Creation Date : 03-02-2016
-* Last Modified : Thu 11 Feb 2016 05:47:21 PM CST
+* Last Modified : Mon 15 Feb 2016 02:31:37 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -29,11 +29,12 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 int main(int argc, char *argv[])
 {
-  int n, i, r, state;
-  pid_t *pid = (int*)malloc(sizeof(int)*n);
+  int n, i, r, state; 
    
   printf("How many childs?\n");
   scanf("%d", &n);
+
+  pid_t *pid = (pid_t*)malloc(sizeof(pid_t)*n);
 
   printf("Father Process\t\tPid Hijo\t\tTime\n");
   printf("    %d  \t\t\n", getpid());
