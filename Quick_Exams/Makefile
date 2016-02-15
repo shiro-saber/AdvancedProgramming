@@ -6,7 +6,7 @@ CFLAGS=-std=c99 -w
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o $(ALL) void_pointer process
+	 \rm -f *.o $(ALL) void_pointer process pipes
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer
