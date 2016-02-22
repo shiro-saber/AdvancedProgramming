@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : server.c
 * Creation Date : 22-02-2016
-* Last Modified : Mon 22 Feb 2016 10:10:37 AM CST
+* Last Modified : Mon 22 Feb 2016 10:52:54 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -31,14 +31,12 @@ int main(int argc, const char * argv[])
 {
      
     struct sockaddr_in direccion;
-    char buffer[1000];
+    int cont;
     int *guardala;
-    
-    guardala = (int*)malloc(sizeof(int)*1);
-
+    int si = 1;
     int servidor, cliente;
     int sum = 0; int sB = 0;
-    int max = 0;int min = 0;
+    int max = 0;
     
     int leidos, escritos;
     
@@ -73,30 +71,31 @@ int main(int argc, const char * argv[])
                ntohs(direccion.sin_port));
         
         // Leer de socket y escribir en pantalla
-        while (leidos = read(cliente, &buffer, sizeof(buffer))) {
-            write(fileno(stdout), &buffer, leidos);
-            //guardala = (int*)realloc(guardala, sizeof(int)*(sB+1));
-            //printf("leido #%d\n",atoi(buffer));
-            guardala = (int*)realloc(guardala, sizeof(int)*sB+1);
-            *(guardala+sB) = atoi(buffer);
-            //printf("guarde %d\n", *(guardala+sB));
-            sB++;                               
-           //leidos = write(fileno(stdin), &buffer, sizeof(buffer));
-           //write(cliente, &buffer, sizeof(int));
+        while (si) {
+            leidos = read(cliente, &cont, sizeof(int));
+            //write(fileno(stdout), &buffer, leidos);
+            read(cliente, &guardala, cont*sizeof(int));
+            guardala = (int*)malloc(sizeof(int)*cont);
+            for(int k = 0; k < cont; ++k)
+            {
+              if(*(guardala+k)==0)
+                si = 0;
+            }
+            for(int i = 0; i < cont; ++i)
+              sum += *(guardala+i);
+              
+            printf("El promedio es: %d\n", sum/cont);
+    
+              int min = *(guardala+0);
+
+              for(int j = 0; j < cont; ++j)
+              {
+                max = (max < *(guardala+j))? *(guardala+j) : max;
+                min = (min > *(guardala+j))? *(guardala+j) : min;
+              }
+          printf("El máximo es: %d\nEl mínimo es: %d\n", max, min);
         }
     }
-
-    for(int i = 0; i < sB; ++i)
-      sum += *(guardala+i);
-    printf("El promedio es: %d\n", sum/sB);
-    
-    for(int j = 0; j < sB; ++j)
-    {
-      max = (max < *(guardala+j))? *(guardala+j) : max;
-      min = (min > *(guardala+j))? *(guardala+j) : min;
-    }
-
-    printf("El máximo es: %d\nEl mínimo es: %d\n", max, min);
     // Cerrar el socket
     
     close(servidor);
