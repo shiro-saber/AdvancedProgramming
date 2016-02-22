@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : client.c
 * Creation Date : 22-02-2016
-* Last Modified : Mon 22 Feb 2016 01:21:52 AM CST
+* Last Modified : Mon 22 Feb 2016 07:45:53 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -25,9 +25,9 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #define TCP_PORT 8000
 
-int main(int argc, const char * argv[]) {
-    
-    struct sockaddr_in direccion;
+int main(int argc, const char * argv[]) 
+{
+ struct sockaddr_in direccion;
     char buffer[1000];
     
     int cliente;
@@ -57,12 +57,11 @@ int main(int argc, const char * argv[]) {
                ntohs(direccion.sin_port));
         
         // Leer de teclado y escribir en socket
-        while (leidos = read(fileno(stdin), &buffer, sizeof(buffer))) 
-        {
+        while (leidos = read(fileno(stdin), &buffer, sizeof(buffer))) {
             write(cliente, &buffer, leidos);
             
-            leidos = read(cliente, &buffer, sizeof(buffer));
-            write(fileno(stdout), &buffer, leidos);
+            //leidos = read(cliente, &buffer, sizeof(buffer));
+            //write(fileno(stdout), &buffer, leidos);
         }
     }
     
