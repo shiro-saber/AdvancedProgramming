@@ -1,4 +1,4 @@
-ALL: void_pointer process client server
+ALL: void_pointer process pipes client server
 ALL:$(ALL)
 CFLAGS=-std=c99 -w
 
@@ -6,7 +6,7 @@ CFLAGS=-std=c99 -w
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o $(ALL) void_pointer process client server
+	 \rm -f *.o $(ALL) void_pointer process pipes client server
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer

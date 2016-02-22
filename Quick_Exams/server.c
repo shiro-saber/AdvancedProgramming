@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
-* File Name : pipes_exam.c
-* Creation Date : 14-02-2016
-* Last Modified : Mon 15 Feb 2016 11:00:16 AM CST
+* File Name : server.c
+* Creation Date : 22-02-2016
+* Last Modified : Mon 22 Feb 2016 01:23:19 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -17,58 +17,81 @@ C LANGUAGE       ()''()-.
 _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include <stdio.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
-#define N 2
+#include <wait.h>
 
-int main(int argc, char *argv[])
-{ 
-  char a = 'v';
+#define TCP_PORT 8000
+
+int main(int argc, const char * argv[])
+{
+  struct sockaddr_in direction;
+  char buffer[1000];
+  int client, server;
+  int continuer = 1;
+
+  socklen_t readed, writed;
   pid_t pid;
-  int **pip;
 
   if(argc != 2)
   {
-    fprintf(stderr, "Syntax: %s <number of <number of process>\n", argv[0]);
-    return -1;
+    fprintf(stderr, "Syntax: %s <IP>\n", argv[0]);
+    exit(-1);
   }
   
-  *(pip) = (int*)malloc(sizeof(int)*atoi(argv[1]));
+  // Create the socket
+  server = socket(PF_INET, SOCK_STREAM, 0);
 
-  for(int j = 0; j < atoi(argv[1]); ++j)
-    *(pip+j) = (int*)malloc(sizeof(int)*N);
+  //Link the socket
+  inet_aton(argv[1], &direction.sin_addr);
+  direction.sin_port = htons(TCP_PORT);
+  direction.sin_family = AF_INET;
 
-  for(int i = 0; i < atoi(argv[1]); ++i)
+  bind(server, (struct sockaddr *)&direction, sizeof(direction));
+
+  //Listen
+  listen(server, 10);
+  writed = sizeof(direction);
+
+  //Accept conections
+  while(continuer)
   {
-    pipe(*(pip+i));
+    client = accept(server, (struct sockaddr *)&direction, &writed);
 
-    pid=fork();
+    printf("Accepting clients in %s: %d\n", inet_ntoa(direction.sin_addr), ntohs(direction.sin_port));
+
+    pid = fork();
 
     if(pid == 0)
-    {
-      close(*(pip[1]+i));  
-      read(*(pip[0]+i), &a, sizeof(char));
-      printf("Readind the test: %s, Im process with pid: %d\n", a,getpid());
-      /* second pipe */
-      close(*(pip[0]+i+1));
-      write(*(pip[1]+i+1), &a, sizeof(char)); 
-    }
-    else if(pid < 0)
-    {
-      printf("Error creating child\n");
-      exit(-1);
-    }
-    else
-    {
-      close(*(pip[0]+i));
-      write(*(pip[1]+i), &a, sizeof(char));
-      /* second pipe */
-      close(*(pip[1]+i+1));
-      printf("Readind the test: %s, Im process with pid: %d\n", a,getpid());
-      read(*(pip[0]+i+1), &a, sizeof(char));
-    }
+      continuer = 0;
   }
+
+  if(pid == 0)
+  {
+    close(server);
+
+    if(client >= 0)
+    {
+      while(readed = read(client, &buffer, sizeof(buffer)))
+      {
+        write(fileno(stdout), &buffer, readed);
+
+        /* Read from keyboard and write on the socket */
+        readed = read(client, &buffer, readed);
+        write(client, &buffer, readed);
+      }
+    }
+    close(client);
+  }
+  else
+  {
+    while(wait(NULL) != -1);
+    close(server);
+  }
+
   return 0;
 }
-
