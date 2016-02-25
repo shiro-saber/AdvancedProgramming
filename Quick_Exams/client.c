@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : client.c
 * Creation Date : 22-02-2016
-* Last Modified : Mon 22 Feb 2016 10:49:40 AM CST
+* Last Modified : Mon 22 Feb 2016 11:24:30 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -30,8 +30,8 @@ int main(int argc, const char * argv[])
 {
   struct sockaddr_in direccion;
   char buffer[1000];
+  int bool = 1;
   int *guardala;
-  int si = 1;
   int cliente; 
   int cont = 0;
   int leidos, escritos;
@@ -57,23 +57,25 @@ int main(int argc, const char * argv[])
     
   if (estado == 0) {
     printf("Conectado a %s:%d \n",inet_ntoa(direccion.sin_addr), ntohs(direccion.sin_port));
-  
-  // Leer de teclado y escribir en socket
-    while (si) {
+
+    while (bool) 
+    {
+      bool = 0;
       guardala = (int*)realloc(guardala, sizeof(int)*cont+1);
-      for(int i = 0; i < cont; ++i)
-      {
-        *(guardala+i) = rand()%20;
-        cont++;
-      }
+      cont++;
+      *(guardala+cont-1) = rand()%20;
+      if(*(guardala+cont-1) != 0)
+        bool=1;
+
       write(cliente, &cont, sizeof(int));
-      write(cliente, &guardala, sizeof(int)*cont);
+      write(cliente, guardala, sizeof(int)*cont); 
     }
+    
   }
     
   // Cerrar el socket
   close(cliente);
   free(guardala);
-    
+  
   return 0;
 }
