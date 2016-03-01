@@ -1,5 +1,5 @@
 ALL: ex1 ex2 ex3
-CFLAGS=-std=c99 -w
+CFLAGS= -w
 
 .PHONY:clean
 
@@ -8,10 +8,10 @@ clean:
 	 \rm -f *.o ex1 ex2 ex3
 
 ex1: exercise1.c
-	gcc $(CFLAGS) exercise1.c -g -o ex1
+	cc $(CFLAGS) exercise1.c -g -o ex1
 
 ex2: exercise2.c
-	gcc $(CFLAGS) exercise2.c -g -o ex2
+	cc $(CFLAGS) exercise2.c -g -o ex2
 
 ex3: exercise3.c
-	gcc $(CFLAGS) exercise3.c -g -o ex3
+	cc $(CFLAGS) exercise3.c -g -o ex3
