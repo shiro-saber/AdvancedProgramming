@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise3.c
 * Creation Date : 29-02-2016
-* Last Modified : Mon 29 Feb 2016 11:17:06 PM CST
+* Last Modified : Tue 01 Mar 2016 12:02:04 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -23,14 +23,23 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <unistd.h>
 
 // Make a C program that:
-// 
+// Ignore the kill -2 (SIGINT) signal
+// Save N number of numbers
+//  The number of numbers are send through coomand line
+//  The min number it's 5 the max number its 9
+//  Otherwise print an error message
+// Define an alarm of 3 seconds
+//  If the alarm end's and the user don't gave a number already
+//  Hurry up him
 
 const int t = 3;
 int i = 0;
+int *nums;
 
 void control_alarm(int signal)
 {
-  printf("Hurry up, Data X: \n");
+  printf("Hurry up, Data X(%d): \n", i);
+  //scanf("%d", (nums+i)); 
   int res = alarm(t);
 }
 
@@ -38,7 +47,6 @@ int main(int argc, char *argv[])
 {
   struct sigaction gest;
   int err;
-  int *nums;
 
   if (argc != 2) 
   {
@@ -57,15 +65,19 @@ int main(int argc, char *argv[])
   gest.sa_handler = control_alarm;
   gest.sa_flags = SA_RESTART;
   err = sigaction (SIGALRM, &gest, 0);
-  signal(SIGINT, SIG_IGN);
+  signal(SIGINT, SIG_IGN); 
   alarm(t);
-  
-  for(i ; i < atoi(argv[1]); ++i)
-  {
-    printf("Data X: \n");
-    scanf("%d", *(nums+i)); 
-  }
 
+  for(i = 0 ; i < atoi(argv[1]); ++i)
+  {
+    printf("Data X(%d)\n", i);
+    scanf("%d", (nums+i)); 
+  }
+  
+  for(i = 0; i < atoi(argv[1]); ++i)
+    printf("Number in %d: %d\n", i, *(nums+i));
+
+  free(nums);
   return 0;
 }
 
