@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise1.c
 * Creation Date : 25-02-2016
-* Last Modified : Tue 01 Mar 2016 12:05:44 AM CST
+* Last Modified : Tue 01 Mar 2016 11:32:51 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -40,14 +40,14 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 // If send CTRL+Z the time will be x-1
 
 int t = 3; // time
-int loop = 1;
+//int loop = 1;
 int numc = 0; //ctrl+c times
 int numz = 0; //ctrl+z times
 int child; //the process child
 
 void control_sigusr(int signal)
 {
-  loop = 0;
+  //loop = 0;
   printf("Has intentado cortar %d veces.\nHas intentado detener %d veces\n", numc, numz);
   kill(child, SIGKILL);
   printf("The son has been killed\n");
@@ -121,9 +121,8 @@ int main(int argc, const char * argv[])
     gest.sa_flags = SA_ONESHOT;
     
     err = sigaction (SIGUSR1, &gest, 0);
-    //while(loop);
-    waitpid(pid, &status, 0);
-    //wait(NULL);
+    if(waitpid(pid, &status, 0) != -1)
+      wait(NULL);
   }
  
   return 0;
