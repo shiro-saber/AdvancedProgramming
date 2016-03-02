@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise1.c
 * Creation Date : 25-02-2016
-* Last Modified : Mon 29 Feb 2016 07:37:37 PM CST
+* Last Modified : Tue 01 Mar 2016 12:05:44 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -70,7 +70,8 @@ void control_ctrlc(int signal)
 
 void control_ctrlz(int signal)
 {
-  t--;
+  if(t > 1)
+    t--;
   int res = alarm(t);
   printf("Pulso CTRL + Z, te quedaban %d seg\n", res);
   ++numz; 
