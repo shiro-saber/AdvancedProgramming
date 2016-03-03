@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise1.c
 * Creation Date : 25-02-2016
-*   Last Modified : Wed 02 Mar 2016 09:14:25 PM CST
+*   Last Modified : Wed 02 Mar 2016 10:10:08 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -59,7 +59,7 @@ void control_ctrlc(int signal)
 
 void control_ctrlz(int signal)
 {
-  if(t >= 1)
+  if(t > 1)
     --t;
   ++ctrlz;
   printf("In count %d ctrl+z\n", ctrlz);
@@ -89,6 +89,15 @@ int main(int argc, char *argv[])
     child = getpid();
     printf("My pid is %d, and my dad's pid it's %d\n", child, getppid());
     printf("Now I'm going to sleep\n");
+    
+    gest.sa_handler = SIG_IGN;
+    gest.sa_flags = SA_RESTART;
+    err = sigaction(SIGINT, &gest, 0);
+    
+    gest.sa_handler = SIG_IGN;
+    gest.sa_flags = SA_RESTART;
+    err = sigaction(SIGTSTP, &gest, 0);
+
     sleep(10);
     printf("Woke up, sending User Signal to dad\n");
     kill(getppid(), SIGUSR1);
@@ -111,6 +120,7 @@ int main(int argc, char *argv[])
     gest.sa_handler = control_sigusr;
     gest.sa_flags = SA_ONESHOT;
     err = sigaction(SIGUSR1, &gest, 0);
+    
     while(loop);
     wait(NULL);
   }
