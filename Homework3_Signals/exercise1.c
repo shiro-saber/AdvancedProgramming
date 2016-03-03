@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise1.c
 * Creation Date : 25-02-2016
-* Last Modified : Tue 01 Mar 2016 11:32:51 PM CST
+*   Last Modified : Wed 02 Mar 2016 09:14:25 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -39,91 +39,81 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 // If send CTRL-C the time will be x+1.
 // If send CTRL+Z the time will be x-1
 
-int t = 3; // time
-//int loop = 1;
-int numc = 0; //ctrl+c times
-int numz = 0; //ctrl+z times
-int child; //the process child
-
-void control_sigusr(int signal)
-{
-  //loop = 0;
-  printf("Has intentado cortar %d veces.\nHas intentado detener %d veces\n", numc, numz);
-  kill(child, SIGKILL);
-  printf("The son has been killed\n");
-  raise(SIGKILL);
-}
+int t = 3, loop = 1;
+int ctrlc, ctrlz, child;
+pid_t pid;
 
 void control_alarm(int signal)
 {
-  printf("Aparezco cada %d segundos.\n", t);
+  printf("I show up every %d seconds\n", t);
   int res = alarm(t);
 }
 
 void control_ctrlc(int signal)
 {
-  t++;
+  ++t;
+  ++ctrlc;
+  printf("In count %d ctrl+c\n", ctrlc);
   int res = alarm(t);
-  printf("Pulso CTRL + C, te quedaban %d seg\n", res);
-  ++numc;  
 }
 
 void control_ctrlz(int signal)
 {
-  if(t > 1)
-    t--;
+  if(t >= 1)
+    --t;
+  ++ctrlz;
+  printf("In count %d ctrl+z\n", ctrlz);
   int res = alarm(t);
-  printf("Pulso CTRL + Z, te quedaban %d seg\n", res);
-  ++numz; 
 }
 
-int main(int argc, const char * argv[])
+void control_sigusr(int signal)
+{
+  loop = 0;
+  printf("I recived %d of Ctrl+C and %d of Ctrl+Z\n", ctrlc, ctrlz);
+  printf("User Signal, my child will die!\n");
+  kill(pid, SIGKILL);
+  printf("\nAnd now what?!...\n\n\nALLAUHAKBAR!!\n");
+  raise(SIGKILL);
+}
+
+int main(int argc, char *argv[])
 {
   struct sigaction gest;
-  int err, status;
-  pid_t pid;
+  int err;
   
+  pid = fork();
+
   if(pid == 0)
   {
-    /* sleep 10 seconds */
-    printf("I'm the child with pid %d and my father pid is %d\n", getpid(), getppid());
+    /* This is the child! */
     child = getpid();
+    printf("My pid is %d, and my dad's pid it's %d\n", child, getppid());
+    printf("Now I'm going to sleep\n");
     sleep(10);
-    /* send the signal */
+    printf("Woke up, sending User Signal to dad\n");
     kill(getppid(), SIGUSR1);
-    exit(0);
   }
-  else if (pid > 0)
+  else
   {
-    /* catching CTRL+C */
-    gest.sa_handler = control_ctrlc;
-    gest.sa_flags = SA_RESTART;
-    
-    err = sigaction (SIGINT, &gest, 0);
-    
-    /* catching CTRL+Z */
-    gest.sa_handler = control_ctrlz;
-    gest.sa_flags = SA_RESTART;
-    
-    err = sigaction (SIGTSTP, &gest, 0);
-    
-    /* catching alarm */
     gest.sa_handler = control_alarm;
     gest.sa_flags = SA_RESTART;
-    
-    err = sigaction (SIGALRM, &gest, 0);
-   
-    /* start alarm*/
+    err = sigaction(SIGALRM, &gest, 0);
     alarm(t);
     
-    /* catching sigusr*/
+    gest.sa_handler = control_ctrlc;
+    gest.sa_flags = SA_RESTART;
+    err = sigaction(SIGINT, &gest, 0);
+    
+    gest.sa_handler = control_ctrlz;
+    gest.sa_flags = SA_RESTART;
+    err = sigaction(SIGTSTP, &gest, 0);
+    
     gest.sa_handler = control_sigusr;
     gest.sa_flags = SA_ONESHOT;
-    
-    err = sigaction (SIGUSR1, &gest, 0);
-    if(waitpid(pid, &status, 0) != -1)
-      wait(NULL);
+    err = sigaction(SIGUSR1, &gest, 0);
+    while(loop);
+    wait(NULL);
   }
- 
+
   return 0;
 }
