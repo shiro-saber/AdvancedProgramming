@@ -40,7 +40,7 @@ void control_alarm(int signal)
 {
   printf("Hurry up, Data X(%d): \n", i);
   //scanf("%d", (nums+i)); 
-  int res = alarm(t);
+  //int res = alarm(t);
 }
 
 int main(int argc, char *argv[])
