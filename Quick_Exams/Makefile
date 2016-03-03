@@ -1,12 +1,11 @@
-ALL: void_pointer process pipes client server
-ALL:$(ALL)
+ALL: void_pointer process pipes client server signals
 CFLAGS=-std=c99 -w
 
 .PHONY:clean
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o $(ALL) void_pointer process pipes client server
+	 \rm -f *.o signals void_pointer process pipes client server
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer
@@ -22,3 +21,6 @@ client: client.c
 
 server: server.c
 	gcc $(CFLAGS) server.c -g -o server
+
+signals: signals.c
+	cc $(CFLAGS) signals.c -g -o singals
