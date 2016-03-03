@@ -35,12 +35,13 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 const int t = 3;
 int i = 0;
 int *nums;
+char *sms;
+
+sms = (char*)malloc(sizeof(char)*30);
 
 void control_alarm(int signal)
 {
-  printf("Hurry up, Data X(%d): \n", i);
-  //scanf("%d", (nums+i)); 
-  //int res = alarm(t);
+  strcpy(sms, "Hurry up, Data");
 }
 
 int main(int argc, char *argv[])
@@ -67,10 +68,11 @@ int main(int argc, char *argv[])
   err = sigaction (SIGALRM, &gest, 0);
   signal(SIGINT, SIG_IGN); 
   alarm(t);
-
+  strcpy(sms, "Data");
+      
   for(i = 0 ; i < atoi(argv[1]); ++i)
   {
-    printf("Data X(%d)\n", i);
+    printf("sms %d:\n", i);
     scanf("%d", (nums+i)); 
   }
   
