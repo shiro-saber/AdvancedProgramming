@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
       
   for(i = 0 ; i < atoi(argv[1]); ++i)
   {
-    printf("sms %d:\n", i);
+    printf("%s %d:\n", sms, i);
     scanf("%d", (nums+i)); 
   }
   
