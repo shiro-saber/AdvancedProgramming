@@ -1,5 +1,5 @@
-ALL: void_pointer process pipes client server signals
-CFLAGS=-std=c99 -w
+ALL: void_pointer process pipes client server signals signalset
+CFLAGS=-std=c99 -w -pthread
 
 .PHONY:clean
 
@@ -24,3 +24,6 @@ server: server.c
 
 signals: signals.c
 	cc $(CFLAGS) signals.c -g -o singals
+
+signalset: signalset.c
+	cc $(CFLAGS) signalset.c -g -o signalset
