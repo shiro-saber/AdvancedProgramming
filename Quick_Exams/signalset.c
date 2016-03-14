@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : exercise2.c
 * Creation Date : 29-02-2016
-* Last Modified : Mon 14 Mar 2016 11:28:20 AM CST
+* Last Modified : Mon 14 Mar 2016 11:30:29 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -17,6 +17,7 @@ C LANGUAGE       ()''()-.
 _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include <stdio.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
