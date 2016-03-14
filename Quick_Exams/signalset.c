@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
-* File Name : exercise2.c
+* File Name : signalset.c
 * Creation Date : 29-02-2016
-* Last Modified : Mon 14 Mar 2016 11:30:29 AM CST
+* Last Modified : Mon 14 Mar 2016 11:39:28 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -116,8 +116,6 @@ void print()
 
 int main(int argc, char *argv[])
 {
-  int i = 0;
-
   sigset_t mask, pending;
   sigfillset(&mask);
   sigdelset(&mask, SIGALRM);
@@ -126,6 +124,8 @@ int main(int argc, char *argv[])
   alarm(2);
   signal(SIGALRM, control_alarm);
   exists();
+
+  int i = 0;
 
   while(i < ndir)
   {
