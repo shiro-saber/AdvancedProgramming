@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : bank.c
 * Creation Date : 17-03-2016
-* Last Modified : Thu 17 Mar 2016 11:26:48 AM CST
+* Last Modified : Thu 17 Mar 2016 11:29:20 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -20,6 +20,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <sys/types.h>
 #include <time.h>
 
@@ -34,7 +35,7 @@ typedef struct
   int id;
 	int cont;
 	int id_u;
-} eterprises;
+} enterprises;
 
 typedef struct
 {
@@ -66,17 +67,17 @@ int main(int argc, char *argv[])
   srand((unsigned)time(NULL));
   int i = 0; 
 
-  enterprises cash_e[enterprises];
-  clients cash_c[clients];
+  enterprises cash_e[enterprise];
+  clients cash_c[client];
 
-  for(i = 0; i < enterprises; ++i)
+  for(i = 0; i < enterprise; ++i)
   {
     sem_init(&e_sem[i], 0, 1);
     cash_e[i].id = i;
     cash_e[i].cont = 0;
   }
 
-  for(i = 0; i < enterprises; ++i)
+  for(i = 0; i < client; ++i)
   {
     sem_init(&c_sem[i], 0, 1);
     cash_c[i].id = i;
