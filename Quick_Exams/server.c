@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : server.c
 * Creation Date : 22-02-2016
-* Last Modified : Thu 25 Feb 2016 07:39:08 AM CST
+* Last Modified : Tue 15 Mar 2016 07:14:47 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -36,6 +36,7 @@ int main(int argc, const char * argv[])
   int sum = 0; int sB = 0;
   int max = 0;
   int leidos, escritos;
+  int i, j, k;
 
   if (argc != 2) {
     printf("Error. Use: %s A.B.C.D \n", argv[0]);
@@ -64,20 +65,20 @@ int main(int argc, const char * argv[])
       //write(fileno(stdout), &buffer, leidos);
       read(cliente, guardala, cont*sizeof(int));
       guardala = (int*)malloc(sizeof(int)*cont);
-      for(int k = 0; k < cont; ++k)
+      for(k = 0; k < cont; ++k)
         if(*(guardala+k)==0)
           break;
     }
   }
   // Cerrar el socket
-  for(int i = 0; i < cont; ++i)
+  for(i = 0; i < cont; ++i)
     sum += *(guardala+i);
 
   printf("El promedio es: %d\n", sum/cont);
     
   int min = *(guardala+0);
 
-  for(int j = 0; j < cont; ++j)
+  for(j = 0; j < cont; ++j)
   {
     max = (max < *(guardala+j))? *(guardala+j) : max;
     min = (min > *(guardala+j))? *(guardala+j) : min;

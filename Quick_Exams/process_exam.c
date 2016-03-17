@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : process_exam.c
 * Creation Date : 07-02-2016
-* Last Modified : Mon 15 Feb 2016 02:04:34 AM CST
+* Last Modified : Tue 15 Mar 2016 07:13:30 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 {
   pid_t *pid;
   pid_t sum;
-  int status, k;
+  int status, k, i;
 
   if(argc != 2)
   {
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
   pid = (pid_t*)malloc(sizeof(pid_t)*atoi(argv[1]));
 
-  for(int i = 0; i < atoi(argv[1]); ++i)
+  for(i = 0; i < atoi(argv[1]); ++i)
   {
     *(pid+i) = fork();
     k++;

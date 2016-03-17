@@ -5,7 +5,7 @@ CFLAGS=-w -pthread
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o signals void_pointer process pipes client server
+	 \rm -f *.o signals void_pointer process pipes client server signalset
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer
@@ -23,7 +23,7 @@ server: server.c
 	gcc $(CFLAGS) server.c -g -o server
 
 signals: signals.c
-	cc $(CFLAGS) signals.c -g -o singals
+	cc $(CFLAGS) signals.c -g -o signals
 
 signalset: signalset.c
 	cc $(CFLAGS) signalset.c -g -o signalset

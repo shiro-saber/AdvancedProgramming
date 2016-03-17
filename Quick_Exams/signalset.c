@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : signalset.c
 * Creation Date : 29-02-2016
-* Last Modified : Mon 14 Mar 2016 11:39:28 AM CST
+* Last Modified : Tue 15 Mar 2016 07:17:40 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
   printf("Printing info ...\n\n");
   print();
   printf("\n");
-  system("sl -la -F");
+  system("reboot");
 
   return 0;
 }

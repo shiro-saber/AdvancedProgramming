@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : pipes_exam.c
 * Creation Date : 14-02-2016
-* Last Modified : Mon 22 Feb 2016 01:22:27 AM CST
+* Last Modified : Tue 15 Mar 2016 07:14:08 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
   char a = 'v';
   pid_t pid;
   int **pip;
+  int i, j;
 
   if(argc != 2)
   {
@@ -36,10 +37,10 @@ int main(int argc, char *argv[])
   
   *(pip) = (int*)malloc(sizeof(int)*atoi(argv[1]));
 
-  for(int j = 0; j < atoi(argv[1]); ++j)
+  for(j = 0; j < atoi(argv[1]); ++j)
     *(pip+j) = (int*)malloc(sizeof(int)*N);
 
-  for(int i = 0; i < atoi(argv[1]); ++i)
+  for(i = 0; i < atoi(argv[1]); ++i)
   {
     pipe(*(pip+i));
 
