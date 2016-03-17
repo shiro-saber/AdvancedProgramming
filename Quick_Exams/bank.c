@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : bank.c
 * Creation Date : 17-03-2016
-* Last Modified : Thu 17 Mar 2016 11:50:19 AM CST
+* Last Modified : Thu 17 Mar 2016 12:12:10 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -49,7 +49,7 @@ clients cash_c[client];
 
 void* attendE(int n, int p)
 {
-	printf("The client %d it's being attend on the casheer %d\n", n, p);
+	printf("The client %d it's being attend on the casheer %d, of the enterpises casheers\n", n, p);
   cash_e[p].cont += 1;
 
   sleep((rand()%120)+180);
@@ -64,7 +64,7 @@ void* attendE(int n, int p)
 
 void* attendC(int n, int p)
 {
-	printf("The client %d it's being attend on the casheer %d\n", n, p);
+	printf("The client %d it's being attend on the casheer %d, of the clients casheers\n", n, p);
   cash_c[p].cont += 1;
 
   sleep((rand()%120)+180);
@@ -82,9 +82,11 @@ void* op_C(int n)
 {
   int status = -1;
 	int i = 0;
-	while(status == -1){
-	  for (i; i < client; ++i){
-	    status = sem_trywait(cash_c[i].sem);
+	while(status == -1)
+  {
+	  for (i; i < client; ++i)
+    {
+	    status = sem_trywait(&cash_c[i].sem);
 	    if (status == 0)
 	      attendC(n, i);
     }
@@ -95,11 +97,13 @@ void* op_E(int n)
 {
   int status = -1;
 	int i = 0;
-	while(status == -1){
-	  for (i; i < enterprise; ++i){
-	    status = sem_trywait(cash_e[i].sem);
+	while(status == -1)
+  {
+	  for (i; i < enterprise; ++i)
+    {
+	    status = sem_trywait(&cash_e[i].sem);
 	    if (status == 0)
-          attendE(n, i);
+        attendE(n, i);
     }
 	}
 }
@@ -125,6 +129,27 @@ int main(int argc, char *argv[])
 
   pthread_t clients_gen[100];
 	pthread_t enterprises_gen[50];
+  
+  pthread_t *aux;
+  int index = 0;
+
+  for(aux = clients_gen; aux < (clients_gen+50); ++aux)
+    pthread_create(aux, NULL, op_C, (void*)index++);
+
+  for(aux = enterprises_gen; aux < (enterprises_gen+50); ++aux)
+    pthread_create(aux, NULL, op_E, (void*)index++);
+
+  for(aux = clients_gen; aux < (clients_gen+50); ++aux)
+    pthread_join(*aux, NULL);
+
+  for(aux = enterprises_gen; aux < (enterprises_gen+50); ++aux)
+    pthread_join(*aux, NULL);
+
+  for(i = 0; i < client; ++i)
+    sem_destroy(&(cash_c[i].sem));
+
+   for(i = 0; i < enterprise; ++i)
+    sem_destroy(&(cash_e[i].sem));
 
   return 0;
 }
