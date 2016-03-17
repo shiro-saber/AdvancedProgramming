@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : bank.c
 * Creation Date : 17-03-2016
-* Last Modified : Thu 17 Mar 2016 11:29:20 AM CST
+* Last Modified : Thu 17 Mar 2016 11:43:06 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -44,7 +44,7 @@ typedef struct
 	int id_u;
 }clients;
 
-void* attendE(void* p)
+void* attendE(int n, int p)
 {
 	enterprises* e = (enterprises*)p;
 	if(e->cont == 5)
@@ -53,14 +53,41 @@ void* attendE(void* p)
 	pthread_exit(NULL);
 }
 
-void* atenderEmpresarial(void* p)
+void* attendC(int n, int p)
 {
-	clients* e = (clients*)p;
-	if(e->cont == 5)
+	clients* c = (clients*)p;
+	if(c->cont == 5)
 	  sleep(180);
 
 	pthread_exit(NULL);
 }
+
+void* op_C(int n)
+{
+  int status = -1;
+	int i = 0;
+	while(status == -1){
+	  for (i; i < client; ++i){
+	    status = sem_trywait(cash_c[i].sem);
+	    if (status == 0)
+	      attendC(n, i);
+    }
+	}
+}
+
+void* op_E(int n)
+{
+  int status = -1;
+	int i = 0;
+	while(status == -1){
+	  for (i; i < enterprise; ++i){
+	    status = sem_trywait(cash_e[i].sem);
+	    if (status == 0)
+          attendE(n, i);
+    }
+	}
+}
+
 
 int main(int argc, char *argv[])
 {
