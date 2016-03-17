@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : bank.c
 * Creation Date : 17-03-2016
-* Last Modified : Thu 17 Mar 2016 11:43:06 AM CST
+* Last Modified : Thu 17 Mar 2016 11:50:19 AM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -27,11 +27,9 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #define client 5
 #define enterprise 3
 
-sem_t c_sem[client];
-sem_t e_sem[enterprise];
-
 typedef struct
 {
+  sem_t sem;
   int id;
 	int cont;
 	int id_u;
@@ -39,25 +37,43 @@ typedef struct
 
 typedef struct
 {
+  sem_t sem;
   int id;
 	int cont;
 	int id_u;
 }clients;
 
+enterprises cash_e[enterprise];
+clients cash_c[client];
+
+
 void* attendE(int n, int p)
 {
-	enterprises* e = (enterprises*)p;
-	if(e->cont == 5)
-	  sleep(180);
+	printf("The client %d it's being attend on the casheer %d\n", n, p);
+  cash_e[p].cont += 1;
 
+  sleep((rand()%120)+180);
+
+  if(cash_e[p].cont == 5)
+  {
+	  sleep(180);
+    cash_e[p].cont = 0;
+  }
 	pthread_exit(NULL);
 }
 
 void* attendC(int n, int p)
 {
-	clients* c = (clients*)p;
-	if(c->cont == 5)
+	printf("The client %d it's being attend on the casheer %d\n", n, p);
+  cash_c[p].cont += 1;
+
+  sleep((rand()%120)+180);
+
+  if(cash_c[p].cont == 5)
+  {
 	  sleep(180);
+    cash_c[p].cont = 0;
+  }
 
 	pthread_exit(NULL);
 }
@@ -88,25 +104,21 @@ void* op_E(int n)
 	}
 }
 
-
 int main(int argc, char *argv[])
 {
   srand((unsigned)time(NULL));
   int i = 0; 
 
-  enterprises cash_e[enterprise];
-  clients cash_c[client];
-
   for(i = 0; i < enterprise; ++i)
   {
-    sem_init(&e_sem[i], 0, 1);
+    sem_init(&cash_e[i], 0, 1);
     cash_e[i].id = i;
     cash_e[i].cont = 0;
   }
 
   for(i = 0; i < client; ++i)
   {
-    sem_init(&c_sem[i], 0, 1);
+    sem_init(&cash_c[i], 0, 1);
     cash_c[i].id = i;
     cash_c[i].cont = 0;
   }
