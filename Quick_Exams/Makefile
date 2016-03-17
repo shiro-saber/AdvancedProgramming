@@ -1,11 +1,11 @@
-ALL: void_pointer process pipes client server signals signalset
+ALL: void_pointer process pipes client server signals signalset bank
 CFLAGS=-w -pthread
 
 .PHONY:clean
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o signals void_pointer process pipes client server signalset
+	 \rm -f *.o signals void_pointer process pipes client server signalset bank
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer
@@ -27,3 +27,6 @@ signals: signals.c
 
 signalset: signalset.c
 	cc $(CFLAGS) signalset.c -g -o signalset
+
+bank: bank.c
+	cc $(CFLAGS) bank.c -g -o bank
