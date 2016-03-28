@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : bank.c
 * Creation Date : 17-03-2016
-* Last Modified : Thu 17 Mar 2016 12:12:10 PM CST
+* Last Modified : Sun 27 Mar 2016 06:28:36 PM CST
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -46,17 +46,18 @@ typedef struct
 enterprises cash_e[enterprise];
 clients cash_c[client];
 
-
 void* attendE(int n, int p)
 {
 	printf("The client %d it's being attend on the casheer %d, of the enterpises casheers\n", n, p);
   cash_e[p].cont += 1;
 
-  sleep((rand()%120)+180);
+  //sleep((rand()%120)+180);
+  sleep(5);
 
   if(cash_e[p].cont == 5)
   {
-	  sleep(180);
+	  //sleep(180);
+    sleep(5);
     cash_e[p].cont = 0;
   }
 	pthread_exit(NULL);
@@ -67,11 +68,13 @@ void* attendC(int n, int p)
 	printf("The client %d it's being attend on the casheer %d, of the clients casheers\n", n, p);
   cash_c[p].cont += 1;
 
-  sleep((rand()%120)+180);
+  //sleep((rand()%120)+180);
+  sleep(5);
 
   if(cash_c[p].cont == 5)
   {
-	  sleep(180);
+	  //sleep(180);
+    sleep(5);
     cash_c[p].cont = 0;
   }
 
@@ -133,14 +136,14 @@ int main(int argc, char *argv[])
   pthread_t *aux;
   int index = 0;
 
-  for(aux = clients_gen; aux < (clients_gen+50); ++aux)
+  for(aux = clients_gen; aux < (clients_gen+100); ++aux)
     pthread_create(aux, NULL, op_C, (void*)index++);
+
+  for(aux = clients_gen; aux < (clients_gen+100); ++aux)
+    pthread_join(*aux, NULL);
 
   for(aux = enterprises_gen; aux < (enterprises_gen+50); ++aux)
     pthread_create(aux, NULL, op_E, (void*)index++);
-
-  for(aux = clients_gen; aux < (clients_gen+50); ++aux)
-    pthread_join(*aux, NULL);
 
   for(aux = enterprises_gen; aux < (enterprises_gen+50); ++aux)
     pthread_join(*aux, NULL);
