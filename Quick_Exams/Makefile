@@ -1,4 +1,4 @@
-ALL: void_pointer process pipes client server signals signalset bank
+ALL: void_pointer process pipes client server signals signalset bank movies
 CFLAGS=-w -pthread
 
 .PHONY:clean
@@ -30,3 +30,6 @@ signalset: signalset.c
 
 bank: bank.c
 	cc $(CFLAGS) bank.c -g -o bank
+
+movies: movies.c
+	cc $(CFLAGS) movies.c -g -o movies
