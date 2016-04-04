@@ -1,5 +1,5 @@
 ALL: dwarfs bathroom dron system
-CFLAGS=-pthread -w
+CFLAGS=-pthread -w -std=c11
 
 .PHONY:clean
 
