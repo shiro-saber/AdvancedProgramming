@@ -44,7 +44,7 @@ void agent (void* arg)
     pthread_mutex_trylock(&zain);
     pthread_mutex_trylock(&tutzke);
     pthread_mutex_trylock(&yaharadin);
-    sleep(10);
+    sleep(15);
     
     if(put)
     {
