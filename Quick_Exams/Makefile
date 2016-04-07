@@ -5,7 +5,7 @@ CFLAGS=-w -pthread
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o signals void_pointer process pipes client server signalset bank
+	 \rm -f *.o signals void_pointer process pipes client server signalset bank movies
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer
