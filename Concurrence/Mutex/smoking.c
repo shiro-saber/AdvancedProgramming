@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : smoking.c
 * Creation Date : 15-03-2016
-* Last Modified : Thu 07 Apr 2016 11:16:01 AM CDT
+* Last Modified : Thu 07 Apr 2016 11:17:27 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -61,7 +61,6 @@ void agent (void* arg)
     pthread_mutex_unlock(&yaharadin);
     pthread_mutex_unlock(&tutzke);
     pthread_mutex_unlock(&zain);
-    sleep(15);
   }
 }
 
