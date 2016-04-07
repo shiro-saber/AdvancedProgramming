@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : smoking.c
 * Creation Date : 15-03-2016
-* Last Modified : Thu 07 Apr 2016 11:17:27 AM CDT
+* Last Modified : Thu 07 Apr 2016 11:29:35 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -41,9 +41,10 @@ void agent (void* arg)
   
   while(1)
   {
-    pthread_mutex_lock(&zain);
-    pthread_mutex_lock(&tutzke);
-    pthread_mutex_lock(&yaharadin);
+    pthread_mutex_trylock(&zain);
+    pthread_mutex_trylock(&tutzke);
+    pthread_mutex_trylock(&yaharadin);
+    sleep(10);
     
     if(put)
     {
@@ -57,7 +58,7 @@ void agent (void* arg)
       
       printf("I'm the agent and I put %d and %d\n", mm1,mm2);
     }
-     
+    
     pthread_mutex_unlock(&yaharadin);
     pthread_mutex_unlock(&tutzke);
     pthread_mutex_unlock(&zain);
@@ -71,16 +72,16 @@ void fumar1(void * arg1)
   
   while(1)
   {
-    pthread_mutex_lock(&zain);
-    pthread_mutex_lock(&tutzke);
-    pthread_mutex_lock(&yaharadin);
+    pthread_mutex_trylock(&zain);
+    pthread_mutex_trylock(&tutzke);
+    pthread_mutex_trylock(&yaharadin); 
     
     if(mine1 ==mm1 || mine1==mm2)
     {
       pthread_mutex_unlock(&yaharadin);
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
-        
+      sleep(10); 
     }
     else
     {
@@ -94,7 +95,7 @@ void fumar1(void * arg1)
       pthread_mutex_unlock(&zain);
       
       printf("I'm the smoker %d and I got cancer!\n", mine1);
-      sleep(10);
+      sleep(20);
     }
   }
   pthread_exit(NULL);
@@ -107,15 +108,17 @@ void fumar2(void * arg2)
   
   while(1)
   {
-    pthread_mutex_lock(&zain);
-    pthread_mutex_lock(&tutzke);
-    pthread_mutex_lock(&yaharadin);
+    pthread_mutex_trylock(&zain);
+    pthread_mutex_trylock(&tutzke);
+    pthread_mutex_trylock(&yaharadin);
+    //sleep(10);
     
     if(mine2 ==mm1 || mine2==mm2)
     {
       pthread_mutex_unlock(&yaharadin);
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
+      sleep(10);
     }
     else
     {
@@ -128,7 +131,7 @@ void fumar2(void * arg2)
       pthread_mutex_unlock(&zain);
       
       printf("I'm the smoker %d and I got cancer!\n", mine2);
-      sleep(10);
+      sleep(20);
     }
   }
   pthread_exit(NULL);
@@ -141,15 +144,17 @@ void fumar3(void * arg3)
   
   while(1)
   {
-    pthread_mutex_lock(&zain);
-    pthread_mutex_lock(&tutzke);
-    pthread_mutex_lock(&yaharadin);
+    pthread_mutex_trylock(&zain);
+    pthread_mutex_trylock(&tutzke);
+    pthread_mutex_trylock(&yaharadin);
+    //sleep(10);
     
     if(mine3 ==mm1 || mine3==mm2)
     {
       pthread_mutex_unlock(&yaharadin);
       pthread_mutex_unlock(&tutzke);
-      pthread_mutex_unlock(&zain);    
+      pthread_mutex_unlock(&zain);
+      sleep(10);
     }
     else
     {
@@ -161,8 +166,8 @@ void fumar3(void * arg3)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
-      printf("Im the smoker %d, and I got cancer!\n", mine3);
-      sleep(10);
+      printf("I'm the smoker %d, and I got cancer!\n", mine3);
+      sleep(20);
     }
   }
   pthread_exit(NULL);
