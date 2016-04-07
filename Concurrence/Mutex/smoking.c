@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : smoking.c
 * Creation Date : 15-03-2016
-* Last Modified : Thu 07 Apr 2016 11:29:35 AM CDT
+* Last Modified : Thu 07 Apr 2016 11:38:15 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -81,6 +81,7 @@ void fumar1(void * arg1)
       pthread_mutex_unlock(&yaharadin);
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
+      printf("I'm the smoker %d and I got cancer!\n", mine1);
       sleep(10); 
     }
     else
@@ -94,7 +95,7 @@ void fumar1(void * arg1)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
-      printf("I'm the smoker %d and I got cancer!\n", mine1);
+      printf("Giving\n"); 
       sleep(20);
     }
   }
@@ -118,6 +119,7 @@ void fumar2(void * arg2)
       pthread_mutex_unlock(&yaharadin);
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
+      printf("I'm the smoker %d, and I got cancer!\n", mine2);
       sleep(10);
     }
     else
@@ -130,7 +132,7 @@ void fumar2(void * arg2)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
-      printf("I'm the smoker %d and I got cancer!\n", mine2);
+      printf("Giving\n");
       sleep(20);
     }
   }
@@ -154,6 +156,7 @@ void fumar3(void * arg3)
       pthread_mutex_unlock(&yaharadin);
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
+      printf("I'm the smoker %d, and I got cancer!\n", mine3);
       sleep(10);
     }
     else
@@ -166,7 +169,7 @@ void fumar3(void * arg3)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
-      printf("I'm the smoker %d, and I got cancer!\n", mine3);
+      printf("Giving\n"); 
       sleep(20);
     }
   }
@@ -189,6 +192,9 @@ int main()
   pthread_join(*(tids+1),NULL);
   pthread_join(*(tids+2),NULL);
   pthread_join(*(tids+3),NULL);
+
+  free(tids);
+  printf("AllahUakbar!\n");
 
   return 0;
 }
