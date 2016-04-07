@@ -58,6 +58,7 @@ void agent (void* arg)
       printf("I'm the agent and I put %d and %d\n", mm1,mm2);
     }
     
+    sleep(15);
     pthread_mutex_unlock(&yaharadin);
     pthread_mutex_unlock(&tutzke);
     pthread_mutex_unlock(&zain);
@@ -93,8 +94,10 @@ void fumar1(void * arg1)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
+      sleep(10);
       printf("I'm the smoker %d and I got cancer!\n", mine1);
     }
+    sleep(20);
   }
   pthread_exit(NULL);
 }
@@ -126,8 +129,10 @@ void fumar2(void * arg2)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
+      sleep(10);
       printf("I'm the smoker %d and I got cancer!\n", mine2);
     }
+    sleep(20);
   }
   pthread_exit(NULL);
 }
@@ -159,8 +164,10 @@ void fumar3(void * arg3)
       pthread_mutex_unlock(&tutzke);
       pthread_mutex_unlock(&zain);
       
+      sleep(10);
       printf("Im the smoker %d, and I got cancer!\n", mine3);
     }
+    sleep(20);
   }
   pthread_exit(NULL);
 }
