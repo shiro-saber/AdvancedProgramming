@@ -55,8 +55,6 @@ void agent (void* arg)
       {
         mm2=rand()%3; 
       }while(mm1==mm2);
-      
-      printf("I'm the agent and I put %d and %d\n", mm1,mm2);
     }
     
     pthread_mutex_unlock(&yaharadin);
