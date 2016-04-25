@@ -1,11 +1,11 @@
-ALL: void_pointer process pipes client server signals signalset bank movies
-CFLAGS=-w -pthread
+ALL: void_pointer process pipes client server signals signalset bank movies openmp
+CFLAGS=-w -pthread -fopenmp
 
 .PHONY:clean
 
 clean:
 	@echo Porque Kenny!
-	 \rm -f *.o signals void_pointer process pipes client server signalset bank movies
+	 \rm -f *.o signals void_pointer process pipes client server signalset bank movies openmp
 
 void_pointer: pointers.c
 	gcc $(CFLAGS) pointers.c -g -o void_pointer
@@ -33,3 +33,6 @@ bank: bank.c
 
 movies: movies.c
 	cc $(CFLAGS) movies.c -g -o movies
+
+openmp: ompExam.c
+	gcc $(CFLAGS) ompExam.c -g -o openmp
