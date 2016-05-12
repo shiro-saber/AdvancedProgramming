@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 12-05-2016
-* Last Modified : Thu 12 May 2016 10:11:44 AM CDT
+* Last Modified : Thu 12 May 2016 10:18:15 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -26,6 +26,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <omp.h>
 
 #define nprocesadores 8
 #define HILOS 4
