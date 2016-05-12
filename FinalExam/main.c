@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 12-05-2016
-* Last Modified : Thu 12 May 2016 09:35:21 AM CDT
+* Last Modified : Thu 12 May 2016 09:52:11 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
   printf("Ingresa el tamaño del tablero\n");
   scanf("%d", &tamano);
 
+  pthread_t *threads = (pthread_t*)malloc(sizeof(pthread_t)*HILOS);
   int ready = 0;
 
 	int myid, numprocs, nh, tid;
@@ -67,8 +68,6 @@ int main(int argc, char *argv[])
   if (myid == 0)
     if (signal(SIGUSR1,gestor) == SIG_ERR)
 	    printf("No se pudo establecer el manejador de la senal....\n");
-
-	/* Aqui van threads */
 
   int *b = (int*)malloc(tamano*tamano*sizeof(int));
 	int i;
@@ -91,18 +90,22 @@ int main(int argc, char *argv[])
 	}
 
   /* THREADS */
+  for(i = 0; i < HILOS; ++i)
+    pthread_create(*(threads+i), 0,(void*)getMoves, (void*)r);
+
+  for(i = 0; i < HILOS; ++i)
+    pthread_join(*(threads+i), NULL);
 
   r->x = *x_start;
 	r->y = *y_start;
 	printf("I am the process %d and I have my board\n",myid);
 	execute(r,b);
 
-  /* THREAD */
-
   free(b);
 	free(r);
 	free(x_start);
 	free(y_start);
+  free(threads);
   
   printf("Hello World\n");
 
@@ -147,7 +150,6 @@ void divideBoard(int *b)
 	for (i=0;i<nprocesadores;++i)
   {
 	  *y = *x + j*size;
-    /* Aqui van los threads */ 
 	  j++;
 	  if (j == blocks)
     {
