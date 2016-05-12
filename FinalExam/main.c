@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name : main.c
 * Creation Date : 12-05-2016
-* Last Modified : Thu 12 May 2016 09:22:07 AM CDT
+* Last Modified : Thu 12 May 2016 09:35:21 AM CDT
 * Created By : shiro-saber
 
 KNOW LEARN        .==.
@@ -45,21 +45,33 @@ typedef struct RobotT {
 void printBoard(char *); //es obvio
 void divideBoard(int *); //divide el tablero
 void gestor(int sig); //gestor de la señal
-void boom(char ***); //liberador de memoria
+int moveValid(Move m, int *b); //movimientos validos
+Move *getMoves(Robot *r, int *b); //regresa los movimientos
+int isFinal(Move m); //llegue al final
+void execute(Robot *, int *); //ejecutar
 int tamano; //tamaño del tablero
-int aux; //cuadrantes
+int myResult = 0;
 
 int main(int argc, char *argv[])
 {
   printf("Ingresa el tamaño del tablero\n");
   scanf("%d", &tamano);
 
-  int *b = (int*)malloc(tamano*tamano*sizeof(int));
-	int i, myid;
+  int ready = 0;
+
+	int myid, numprocs, nh, tid;
+	int  longitud;
+	int *x_start = (int*)malloc(sizeof(int));
+	int *y_start = (int*)malloc(sizeof(int));
 
   if (myid == 0)
     if (signal(SIGUSR1,gestor) == SIG_ERR)
 	    printf("No se pudo establecer el manejador de la senal....\n");
+
+	/* Aqui van threads */
+
+  int *b = (int*)malloc(tamano*tamano*sizeof(int));
+	int i;
 
 	for (i=0;i<tamano*tamano;++i)
 	  *(b+i) = 0;
@@ -70,11 +82,29 @@ int main(int argc, char *argv[])
 	r->steps = 0;
 	r->r = NULL;
 
+  printBoard(b);
+
 	if (myid == 0)
   {
 	  printf("I am the boss, I divide the board\n");
 	  divideBoard(b);
 	}
+
+  /* THREADS */
+
+  r->x = *x_start;
+	r->y = *y_start;
+	printf("I am the process %d and I have my board\n",myid);
+	execute(r,b);
+
+  /* THREAD */
+
+  free(b);
+	free(r);
+	free(x_start);
+	free(y_start);
+  
+  printf("Hello World\n");
 
   return 0;
 }
@@ -83,20 +113,6 @@ void gestor(int sig)
 {
   printf("Recibi SIGUSR1\n");
   sleep(2);
-}
-
-void boom(char ***allahuakbar)
-{
-  int i = 0, j = 0;
-
-  for(i; i < tamano; ++i)
-  {
-    for(j; j < tamano; ++j)
-      free(*(*allahuakbar+i)+j);
-    
-    free(*(allahuakbar+i));
-  }
-  free(allahuakbar);
 }
 
 void printBoard(char *b)
@@ -142,4 +158,76 @@ void divideBoard(int *b)
 
 	free(x);
 	free(y);
+}
+
+int moveValid(Move m, int *b){
+  return m.x >= 0 && m.x < tamano && m.y >= 0 && m.y < tamano && *(b+m.x) == 0 && *(b+m.y) == 0;
+}
+
+Move* getMoves(Robot *r, int *b)
+{	
+  Move *m = (Move*)malloc(4*sizeof(Move));
+	int i;
+	for (i=0;i<4;++i)
+  {
+	  Move newMove;
+	  if (i==0)
+    {
+	    newMove.x = r->x + 1;
+	    newMove.y = r->y;
+	    *(m+i) = newMove;
+	  }
+	  if (i==1)
+    {
+	    newMove.x = r->x;
+	    newMove.y = r->y + 1;
+	    *(m+i) = newMove;
+	  }
+	  if (i==2)
+    {
+	    newMove.x = r->x - 1;
+	    newMove.y = r->y;
+	    *(m+i) = newMove;
+	  }
+	  if (i==3)
+    {
+	    newMove.x = r->x;
+	    newMove.y = r->y - 1;
+	    *(m+i) = newMove;
+	  }
+	}
+	return m;
+}
+
+int isFinal(Move m)
+{
+	return m.x == tamano-1 && m.y == tamano-1;
+}
+
+void execute(Robot *r, int *b)
+{
+	Move *m = getMoves(r,b);
+	int i;
+	
+  #pragma omp for private(i)
+	for (i=0;i<4;++i)
+  {
+    Move move = *(m+i);
+	  if (moveValid(move,b))
+    {
+	    if (isFinal(move))
+	      myResult++;
+	    else 
+      {
+	      Robot *newRobot = (Robot*)malloc(sizeof(Robot));
+	      newRobot->x = move.x;
+	      newRobot->y = move.y;
+	      newRobot->steps = r->steps+1;
+	      newRobot->r = r;
+	      execute(newRobot,b);
+	      free(newRobot);
+	    }
+	  }
+	}
+	free(m);
 }
